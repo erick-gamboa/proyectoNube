@@ -1,7 +1,7 @@
 package mx.desarrollo.persistence.dao;
 
 import jakarta.persistence.EntityManager;
-import mx.desarrollo.entity.CarritoDAO;
+import mx.desarrollo.entity.Carrito;
 import mx.desarrollo.persistence.persistence.AbstractDAO;
 import java.util.List;
 

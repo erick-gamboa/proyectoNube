@@ -14,7 +14,7 @@ public class Carrito {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
+    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuarios", nullable = false)
     private Usuario usuario;
 
     public Integer getId() {

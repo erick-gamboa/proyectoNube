@@ -1,4 +1,5 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -6,14 +7,13 @@
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-    <title>Unidades de Aprendizaje</title>
+    <title>Inventario de Vinilos</title>
 
     <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
 
     <style>
-
         .registro {
-            color: #594646;
+            color: #43252D;
             background-color: #FFFFFF;
             padding: 25px;
             margin-top: 20px;
@@ -22,15 +22,21 @@
             max-width: 1100px;
         }
 
-
         .labels {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
         }
 
         .campo {
             display: flex;
             flex-direction: column;
+            gap: 5px;
+        }
+
+        .botones {
+            margin-top: 25px;
+            display: flex;
+            gap: 15px;
         }
 
         .buscador_icono {
@@ -52,88 +58,256 @@
         .buscador_icono .ui-inputfield {
             padding-left: 35px;
         }
-
     </style>
 </h:head>
 
 <h:body>
 
+    <!-- Menú lateral -->
     <h:form>
         <div class="menu_lateral">
 
-            <div class="logo_sauap"><img src="resources/images/logoAz.png" width="50" height="50"/><span style="font-size: 40px; font-weight: bold;">SAUAP</span></div>
-            <div class="menu_opciones">
-                <h:link outcome="profesor" styleClass="menu_btn"><img src="resources/images/iconAgreProfe.png" width="30" height="30"/><span style="font-size: 20px; font-weight: bold;">Alta de profesores</span></h:link>
-                <h:link outcome="unidad" styleClass="menu_btn"><img src="resources/images/iconAgreMateria.png" width="30" height="30"/><span style="font-size: 20px; font-weight: bold;">Unidad de aprendizaje</span></h:link>
-                <h:link outcome="asignacion" styleClass="menu_btn"><img src="resources/images/iconAsignar.png" width="30" height="30"/><span style="font-size: 20px; font-weight: bold;">Asignaciones</span></h:link>
-                <h:link outcome="consultas" styleClass="menu_btn"><img src="resources/images/iconConsultar.png" width="30" height="30"/><span style="font-size: 20px; font-weight: bold;">Consultas</span></h:link>
+            <div class="logo_sauap">
+                <span style="font-size: 32px; font-weight: bold;">
+                    VINILOS
+                </span>
             </div>
 
-            <h:link outcome="login" styleClass="menu_btn cerrar_sesion"><img src="resources/images/iconSalir.png" width="30" height="30"/><span style="font-size: 20px; font-weight: bold;">Cerrar Sesión</span></h:link>
+            <div class="menu_opciones">
+                <h:link outcome="vinilos" styleClass="menu_btn">
+                    <span style="font-size: 18px; font-weight: bold;">
+                        Inventario
+                    </span>
+                </h:link>
+
+                <h:link outcome="tickets" styleClass="menu_btn">
+                    <span style="font-size: 18px; font-weight: bold;">
+                        Tickets de compra
+                    </span>
+                </h:link>
+            </div>
+
+            <h:link outcome="login" styleClass="menu_btn cerrar_sesion">
+                <span style="font-size: 18px; font-weight: bold;">
+                    Cerrar sesión
+                </span>
+            </h:link>
 
         </div>
     </h:form>
 
-
     <div class="contenido">
-        <h1>Registro de Unidad Académica</h1>
-        <p:growl id="msgs" showDetail="true" sticky="false" life="4000"/>
 
+        <h1>Inventario de Vinilos</h1>
 
+        <p:growl id="msgs" showDetail="true" life="4000"/>
+
+        <!-- PARTE 1: Registro y modificación -->
         <div class="registro">
-            <h:form id="formUnidad">
 
-                <h2>Datos de Unidad de Aprendizaje</h2>
-                <h:panelGroup id="formularioUnidad" layout="block" style="display: flex; gap: 30px; align-items: flex-start;">
-                    <div class="campo"><p:outputLabel value="Nombre de la unidad*" styleClass="labels"/><p:inputText value="#{unidadABean.nombre}" placeholder="Ej. Programación" required="true" requiredMessage="El nombre de unidad es obligatorio" maxlength="50"/></div>
-                    <div class="campo"><p:outputLabel value="Horas de clase*" styleClass="labels"/><p:spinner value="#{unidadABean.horasClase}" min="0" max="4" /><h:outputText value="(0 - 4)" /></div>
-                    <div class="campo"><p:outputLabel value="Horas de taller*" styleClass="labels"/><p:spinner value="#{unidadABean.horasTaller}" min="0" max="4"/><h:outputText value="(0 - 4)"/></div>
-                    <div class="campo"><p:outputLabel value="Horas de laboratorio*" styleClass="labels"/><p:spinner value="#{unidadABean.horasLab}" min="0" max="4"/><h:outputText value="(0 - 4)"/></div>
+            <h:form id="formVinilo">
+
+                <h2>Datos del vinilo</h2>
+
+                <h:panelGroup id="formularioVinilo" layout="block"
+                              style="display: flex; gap: 25px; align-items: flex-start; flex-wrap: wrap;">
+
+                    <div class="campo">
+                        <p:outputLabel value="Nombre *" styleClass="labels"/>
+                        <p:inputText value="#{viniloBean.nombre}"
+                                     placeholder="Nombre del vinilo"
+                                     required="true"
+                                     requiredMessage="El nombre es obligatorio"
+                                     maxlength="50"/>
+                    </div>
+
+                    <div class="campo">
+                        <p:outputLabel value="Género *" styleClass="labels"/>
+                        <p:inputText value="#{viniloBean.genero}"
+                                     placeholder="Ej. Rock"
+                                     required="true"
+                                     requiredMessage="El género es obligatorio"
+                                     maxlength="50"/>
+                    </div>
+
+                    <div class="campo">
+                        <p:outputLabel value="Artista *" styleClass="labels"/>
+                        <p:inputText value="#{viniloBean.artista}"
+                                     placeholder="Nombre del artista"
+                                     required="true"
+                                     requiredMessage="El artista es obligatorio"
+                                     maxlength="50"/>
+                    </div>
+
+                    <div class="campo">
+                        <p:outputLabel value="Cantidad *" styleClass="labels"/>
+                        <p:spinner value="#{viniloBean.cantidad}"
+                                   min="0"
+                                   required="true"/>
+                    </div>
+
+                    <div class="campo">
+                        <p:outputLabel value="Precio *" styleClass="labels"/>
+                        <p:inputNumber value="#{viniloBean.precio}"
+                                       minValue="0"
+                                       decimalPlaces="2"
+                                       symbol="$"
+                                       required="true"
+                                       requiredMessage="El precio es obligatorio"/>
+                    </div>
+
+                    <div class="campo">
+                        <p:outputLabel value="Imagen (URL) *" styleClass="labels"/>
+                        <p:inputText value="#{viniloBean.imagen}"
+                                     placeholder="URL de la imagen"
+                                     required="true"
+                                     requiredMessage="La imagen es obligatoria"
+                                     maxlength="50"/>
+                    </div>
+
                 </h:panelGroup>
 
-                <!--Botones-->
-                <div style="margin-top: 25px; display: flex; gap: 15px;">
-                    <p:commandButton id="botonGuardar" value="Guardar" action="#{unidadABean.guardarUnidad}" process="@form" update="@form :formTabla:tablaUnidades :msgs" resetValues="true"/>
-                    <p:commandButton id="botonEliminar" value="Eliminar" action="#{unidadABean.eliminarUnidad}" process="@this" update="@form :formTabla:tablaUnidades :msgs" resetValues="true" disabled="#{unidadABean.unidadSeleccionada == null}">
-                        <p:confirm header="Confirmar eliminación" message="¿Estás seguro de eliminar esta unidad de aprendizaje?" icon="pi pi-exclamation-triangle"/>
-                    </p:commandButton>
-                    <p:commandButton id="botonModificar" value="Modificar" action="#{unidadABean.modificarUnidad}" process="@form" update="@form :formTabla:tablaUnidades :msgs" disabled="#{unidadABean.unidadSeleccionada == null}"/>
-                </div>
-                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="400">
-                    <p:commandButton value="Sí, eliminar" type="button" icon="pi pi-check" styleClass="ui-confirmdialog-yes"/>
-                    <p:commandButton value="Cancelar" type="button" icon="pi pi-times" styleClass="ui-confirmdialog-no"/>
-                </p:confirmDialog>
-            </h:form>
-        </div>
-        <br/><br/><br/><br/>
+                <!-- Botones -->
+                <div class="botones">
 
-        <!--Buscador de unidades-->
-        <div style="display: flex; align-items: center; justify-content: space-between; max-width: 1100px; margin-bottom: 15px;">
-            <h1 style="margin: 0;">Unidades de Aprendizaje Registradas</h1>
+                    <p:commandButton id="botonGuardar"
+                                     value="Guardar"
+                                     action="#{viniloBean.guardarVinilo}"
+                                     process="@form"
+                                     update=":formVinilo :formTabla:tablaVinilos :msgs"
+                                     resetValues="true"/>
+
+                    <p:commandButton id="botonModificar"
+                                     value="Modificar"
+                                     action="#{viniloBean.modificarVinilo}"
+                                     process="@form"
+                                     update=":formVinilo :formTabla:tablaVinilos :msgs"
+                                     disabled="#{viniloBean.viniloSeleccionado == null}"/>
+
+                    <p:commandButton id="botonEliminar"
+                                     value="Eliminar"
+                                     action="#{viniloBean.eliminarVinilo}"
+                                     process="@this"
+                                     update=":formVinilo :formTabla:tablaVinilos :msgs"
+                                     disabled="#{viniloBean.viniloSeleccionado == null}">
+                        <p:confirm header="Confirmar eliminación"
+                                   message="¿Estás seguro de eliminar este vinilo?"
+                                   icon="pi pi-exclamation-triangle"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="Limpiar"
+                                     action="#{viniloBean.limpiarCampos}"
+                                     process="@this"
+                                     update=":formVinilo"
+                                     resetValues="true"
+                                     immediate="true"/>
+
+                </div>
+
+                <p:confirmDialog global="true"
+                                 showEffect="fade"
+                                 hideEffect="fade"
+                                 responsive="true"
+                                 width="400">
+                    <p:commandButton value="Sí, eliminar"
+                                     type="button"
+                                     icon="pi pi-check"
+                                     styleClass="ui-confirmdialog-yes"/>
+
+                    <p:commandButton value="Cancelar"
+                                     type="button"
+                                     icon="pi pi-times"
+                                     styleClass="ui-confirmdialog-no"/>
+                </p:confirmDialog>
+
+            </h:form>
+
+        </div>
+
+        <br/><br/>
+
+        <!-- PARTE 2: Buscador y tabla -->
+        <div style="display: flex; align-items: center;
+                    justify-content: space-between; max-width: 1100px;
+                    margin-bottom: 15px; flex-wrap: wrap; gap: 15px;">
+
+            <h1 style="margin: 0;">Vinilos registrados</h1>
+
             <h:form id="formBusqueda">
+
                 <div class="buscador_icono">
-                    <img src="resources/images/iconConsultar.png" alt="Buscar"/>
-                    <p:inputText id="buscador" value="#{unidadABean.filtroNombre}" placeholder="Nombre de la unidad">
-                        <p:ajax event="keyup" process="@this" update=":formTabla:tablaUnidades"/>
+                    <p:inputText id="buscador"
+                                 value="#{viniloBean.filtroNombre}"
+                                 placeholder="Buscar por nombre">
+                        <p:ajax event="keyup"
+                                process="@this"
+                                update=":formTabla:tablaVinilos"/>
                     </p:inputText>
                 </div>
-            </h:form>
-        </div>
 
-        <!-- Tabla con unidades registradas -->
+            </h:form>
+
+        </div>
 
         <div class="registro">
+
             <h:form id="formTabla">
-                <p:dataTable id="tablaUnidades" value="#{unidadABean.buscarUnidades()}" var="unidad" style="width: 100%;" selection="#{unidadABean.unidadSeleccionada}" rowKey="#{unidad.idUnidad}" selectionMode="single" emptyMessage="No se encontraron unidades de aprendizaje">
-                    <p:ajax event="rowSelect" listener="#{unidadABean.cargarUnidadSeleccionada}" update=":formUnidad:formularioUnidad :formUnidad:botonModificar :formUnidad:botonEliminar"/>
-                    <p:column headerText="ID"><h:outputText value="#{unidad.idUnidad}"/></p:column>
-                    <p:column headerText="Nombre de la unidad"><h:outputText value="#{unidad.nombre}"/></p:column>
-                    <p:column headerText="Horas de Clase"><h:outputText value="#{unidad.horasClase}"/></p:column>
-                    <p:column headerText="Horas de Taller"><h:outputText value="#{unidad.horasTaller}"/></p:column>
-                    <p:column headerText="Horas de Laboratorio"><h:outputText value="#{unidad.horasLaboratorio}"/></p:column>
+
+                <p:dataTable id="tablaVinilos"
+                             value="#{viniloBean.buscarVinilos()}"
+                             var="vinilo"
+                             style="width: 100%;"
+                             selection="#{viniloBean.viniloSeleccionado}"
+                             rowKey="#{vinilo.idVinilo}"
+                             selectionMode="single"
+                             emptyMessage="No se encontraron vinilos">
+
+                    <p:ajax event="rowSelect"
+                            listener="#{viniloBean.cargarViniloSeleccionado}"
+                            update=":formVinilo:formularioVinilo
+                                    :formVinilo:botonModificar
+                                    :formVinilo:botonEliminar"/>
+
+                    <p:column headerText="ID">
+                        <h:outputText value="#{vinilo.idVinilo}"/>
+                    </p:column>
+
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{vinilo.nombre}"/>
+                    </p:column>
+
+                    <p:column headerText="Género">
+                        <h:outputText value="#{vinilo.genero}"/>
+                    </p:column>
+
+                    <p:column headerText="Artista">
+                        <h:outputText value="#{vinilo.artista}"/>
+                    </p:column>
+
+                    <p:column headerText="Cantidad">
+                        <h:outputText value="#{vinilo.cantidad}"/>
+                    </p:column>
+
+                    <p:column headerText="Precio">
+                        <h:outputText value="#{vinilo.precio}">
+                            <f:convertNumber type="currency"
+                                             currencySymbol="$"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Imagen">
+                        <p:graphicImage value="#{vinilo.imagen}"
+                                        width="50"
+                                        height="50"
+                                        rendered="#{not empty vinilo.imagen}"/>
+                    </p:column>
+
                 </p:dataTable>
+
             </h:form>
+
         </div>
+
     </div>
 
 </h:body>

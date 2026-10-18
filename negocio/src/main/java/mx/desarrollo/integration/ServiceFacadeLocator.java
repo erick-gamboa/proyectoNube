@@ -1,52 +1,60 @@
 package mx.desarrollo.integration;
 
-import mx.desarrollo.facade.FacadeProfesor;
-import mx.desarrollo.facade.FacadeUnidad;
 import mx.desarrollo.facade.FacadeUsuario;
-import mx.desarrollo.facade.FacadeAsignacion;
+import mx.desarrollo.facade.FacadeVinilo;
+import mx.desarrollo.facade.FacadeCarrito;
+import mx.desarrollo.facade.FacadeDetalleCarrito;
+import mx.desarrollo.facade.FacadeTicketCompra;
+import mx.desarrollo.facade.FacadeDetalleTicket;
 
 public class ServiceFacadeLocator {
 
-    private static FacadeProfesor facadeProfesor;
     private static FacadeUsuario facadeUsuario;
-    private static FacadeAsignacion facadeAsignacion;
-    private static FacadeUnidad facadeUnidad;
-
-    public static FacadeProfesor getInstanceFacadeProfesor() {
-        if (facadeProfesor == null) {
-            facadeProfesor = new FacadeProfesor();
-            return facadeProfesor;
-        } else {
-            return facadeProfesor;
-        }
-    }
+    private static FacadeVinilo facadeVinilo;
+    private static FacadeCarrito facadeCarrito;
+    private static FacadeDetalleCarrito facadeDetalleCarrito;
+    private static FacadeTicketCompra facadeTicketCompra;
+    private static FacadeDetalleTicket facadeDetalleTicket;
 
     public static FacadeUsuario getInstanceFacadeUsuario() {
         if (facadeUsuario == null) {
             facadeUsuario = new FacadeUsuario();
-            return facadeUsuario;
-        } else {
-            return facadeUsuario;
         }
+        return facadeUsuario;
     }
 
-    public static FacadeAsignacion getInstanceFacadeAsignacion() {
-        if (facadeAsignacion == null) {
-            facadeAsignacion = new FacadeAsignacion();
-            return facadeAsignacion;
-        } else {
-            return facadeAsignacion;
+    public static FacadeVinilo getInstanceFacadeVinilo() {
+        if (facadeVinilo == null) {
+            facadeVinilo = new FacadeVinilo();
         }
+        return facadeVinilo;
     }
 
-    public static FacadeUnidad getInstanceFacadeUnidad() {
-        if (facadeUnidad == null) {
-            facadeUnidad = new FacadeUnidad();
-            return facadeUnidad;
-        } else {
-            return facadeUnidad;
+    public static FacadeCarrito getInstanceFacadeCarrito() {
+        if (facadeCarrito == null) {
+            facadeCarrito = new FacadeCarrito();
         }
+        return facadeCarrito;
     }
 
+    public static FacadeDetalleCarrito getInstanceFacadeDetalleCarrito() {
+        if (facadeDetalleCarrito == null) {
+            facadeDetalleCarrito = new FacadeDetalleCarrito();
+        }
+        return facadeDetalleCarrito;
+    }
 
+    public static FacadeTicketCompra getInstanceFacadeTicketCompra() {
+        if (facadeTicketCompra == null) {
+            facadeTicketCompra = new FacadeTicketCompra();
+        }
+        return facadeTicketCompra;
+    }
+
+    public static FacadeDetalleTicket getInstanceFacadeDetalleTicket() {
+        if (facadeDetalleTicket == null) {
+            facadeDetalleTicket = new FacadeDetalleTicket();
+        }
+        return facadeDetalleTicket;
+    }
 }

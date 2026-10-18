@@ -15,7 +15,7 @@ public class TicketCompra {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "idUsuario", nullable = false)
+    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuarios", nullable = false)
     private Usuario usuario;
 
     @NotNull
@@ -24,7 +24,7 @@ public class TicketCompra {
 
     @NotNull
     @Column(name = "total", nullable = false)
-    private Decimal total;
+    private Double total;
 
 
     public Integer getId() {

@@ -1,10 +1,10 @@
 package mx.desarrollo.helper;
 
-import mx.desarrollo.facade.FacadeAsignacion;
+import mx.desarrollo.facade.FacadeVinilo;
 
 public class AsignacionHelper {
 
-private FacadeAsignacion facadeAsignacion;
+private FacadeVinilo facadeAsignacion;
 
 
 }

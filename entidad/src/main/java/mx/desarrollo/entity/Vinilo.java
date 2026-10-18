@@ -10,19 +10,21 @@ public class Vinilo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idVinilo", nullable = false)
-    private Integer idUnidad;
+    private Integer idVinilo;
 
-    @Size(max = 50)
     @NotNull
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Size(max = 50)
     @NotNull
     @Column(name = "genero", nullable = false)
     private String genero;
 
-    @Size(max = 50)
+    @NotNull
+    @Column(name = "descripcion", nullable = false)
+    private String descripcion;
+
+
     @NotNull
     @Column(name = "artista", nullable = false)
     private String artista;
@@ -35,18 +37,31 @@ public class Vinilo {
     @Column(name = "precio", nullable = false)
     private Double precio;
 
-    @NotNull
-    @Column(name = "imagen", nullable = false)
-    private Double precio;
 
-    @Size(max = 50)
-    @NotNull
+        @NotNull
     @Column(name = "imagen", nullable = false)
     private String imagen;
+
+
+
+    public void setNombre(String nombre) {this.nombre = nombre;}
+    public String getNombre() {return this.nombre;}
+
+    public Integer getIdVinilo() {return this.idVinilo;
+    }
+
+    public String getGenero() {return this.genero;}
+
     public void setGenero(String genero) {
         this.genero = genero;
     }
+    public String getDescripcion() {
+        return descripcion;
+    }
 
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
     public String getArtista() {
         return artista;
     }

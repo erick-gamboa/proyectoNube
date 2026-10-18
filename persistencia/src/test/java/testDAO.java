@@ -1,20 +1,23 @@
-import mx.desarrollo.entity.Profesor;
-import mx.desarrollo.persistence.dao.ProfesorDAO;
+import mx.desarrollo.entity.Vinilo;
+import mx.desarrollo.persistence.dao.ViniloDAO;
 import mx.desarrollo.persistence.persistence.HibernateUtil;
 
 public class testDAO {
 
     public static void main(String[] args) {
 
-        ProfesorDAO profesorDAO =
-                new ProfesorDAO(HibernateUtil.getEntityManager());
+        ViniloDAO viniloDAO =
+                new ViniloDAO(HibernateUtil.getEntityManager());
 
-        for (Profesor profesor : profesorDAO.findAll()) {
+        for (Vinilo vinilo : viniloDAO.findAll()) {
             System.out.println(
-                    "ID: " + profesor.getId()
-                            + " | Nombre: " + profesor.getNombre()
-                            + " | Apellido P: " + profesor.getApellidoP()
-                            + " | Apellido M: " + profesor.getApellidoM()
+                    "ID: " + vinilo.getIdVinilo()
+                            + " | Nombre: " + vinilo.getNombre()
+                            + " | Género: " + vinilo.getGenero()
+                            + " | Artista: " + vinilo.getArtista()
+                            + " | Cantidad: " + vinilo.getCantidad()
+                            + " | Precio: " + vinilo.getPrecio()
+                            + " | Imagen: " + vinilo.getImagen()
             );
         }
     }

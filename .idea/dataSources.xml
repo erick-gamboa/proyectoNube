@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="SAUAP@localhost" uuid="9ce194e7-ec01-4248-b2ec-4e0b35428666">
-      <driver-ref>mysql.9</driver-ref>
+    <data-source source="LOCAL" name="mydb@localhost" uuid="dd03bf6c-247d-474a-87ea-adc9cfec67a8">
+      <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/mydb</jdbc-url>

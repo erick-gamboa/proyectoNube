@@ -1,5 +1,4 @@
-```java
-        package mx.desarrollo.persistence.integration;
+package mx.desarrollo.persistence.integration;
 
 import jakarta.persistence.EntityManager;
 import mx.desarrollo.persistence.dao.UsuarioDAO;
@@ -65,4 +64,3 @@ public class ServiceLocator {
         return detalleTicketDAO;
     }
 }
-```

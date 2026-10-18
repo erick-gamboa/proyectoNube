@@ -14,12 +14,12 @@ public class DetalleTicket {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "id_ticket", nullable = false)
+    @JoinColumn(name = "idTicket", nullable = false)
     private TicketCompra ticket;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "id_vinilo", nullable = false)
+    @JoinColumn(name = "idVinilo", nullable = false)
     private Vinilo vinilo;
 
     @NotNull
@@ -28,7 +28,7 @@ public class DetalleTicket {
 
     @NotNull
     @Column(name = "precioUnitario", nullable = false)
-    private Decimal precioUnitario;
+    private Double precioUnitario;
 
     public Integer getId() {
         return id;
