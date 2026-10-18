@@ -37,9 +37,8 @@ public class Vinilo {
     @Column(name = "precio", nullable = false)
     private Double precio;
 
-
-        @NotNull
-    @Column(name = "imagen", nullable = false)
+    @NotNull
+    @Column(name = "imagen", length = 1000)
     private String imagen;
 
 
