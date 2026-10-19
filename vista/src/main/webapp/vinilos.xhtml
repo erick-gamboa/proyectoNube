@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Inventario de Vinilos</title>
+
+    <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
+
+    <style>
+        .registro {
+            color: #43252D;
+            background-color: #FFFFFF;
+            padding: 25px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            max-width: 1100px;
+        }
+
+        .labels {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .botones {
+            margin-top: 25px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .buscador_icono {
+            position: relative;
+            display: inline-block;
+        }
+
+        .buscador_icono img {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .buscador_icono .ui-inputfield {
+            padding-left: 35px;
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+    <!-- Menú lateral -->
+    <h:form>
+        <div class="menu_lateral">
+
+            <div class="logo_sauap">
+                <span style="font-size: 32px; font-weight: bold;">
+                    VINILOS
+                </span>
+            </div>
+
+            <div class="menu_opciones">
+                <h:link outcome="vinilos" styleClass="menu_btn">
+                    <span style="font-size: 18px; font-weight: bold;">
+                        Inventario
+                    </span>
+                </h:link>
+
+                <h:link outcome="tickets" styleClass="menu_btn">
+                    <span style="font-size: 18px; font-weight: bold;">
+                        Tickets de compra
+                    </span>
+                </h:link>
+            </div>
+
+            <h:link outcome="login" styleClass="menu_btn cerrar_sesion">
+                <span style="font-size: 18px; font-weight: bold;">
+                    Cerrar sesión
+                </span>
+            </h:link>
+
+        </div>
+    </h:form>
+
+    <div class="contenido">
+
+        <h1>Inventario de Vinilos</h1>
+
+        <p:growl id="msgs" showDetail="true" life="4000"/>
+
+        <!-- PARTE 1: Registro y modificación -->
+        <div class="registro">
+
+            <h:form id="formVinilo">
+
+                <h2>Datos del vinilo</h2>
+
+                <h:panelGroup id="formularioVinilo" layout="block"
+                              style="display: flex; gap: 25px; align-items: flex-start; flex-wrap: wrap;">
+
+                    <div class="campo">
+                        <h:outputLabel value="Nombre *" styleClass="labels"/>
+                        <p:inputText value="#{viniloBean.nombre}"
+                                     placeholder="Nombre del vinilo"
+                                     required="true"
+                                     requiredMessage="El nombre es obligatorio"
+                                     maxlength="50"/>
+                    </div>
+
+                    <div class="campo">
+                        <h:outputLabel value="Género *" styleClass="labels"/>
+                        <p:inputText value="#{viniloBean.genero}"
+                                     placeholder="Ej. Rock"
+                                     required="true"
+                                     requiredMessage="El género es obligatorio"
+                                     maxlength="50"/>
+                    </div>
+
+                    <div class="campo">
+                        <h:outputLabel value="Descripción *" styleClass="labels"/>
+                        <p:inputText value="#{viniloBean.descripcion}"
+                                     placeholder="Descripción del vinilo"
+                                     required="true"
+                                     requiredMessage="La descripción es obligatoria"
+                                     maxlength="200"/>
+                    </div>
+
+                    <div class="campo">
+                        <h:outputLabel value="Artista *" styleClass="labels"/>
+                        <p:inputText value="#{viniloBean.artista}"
+                                     placeholder="Nombre del artista"
+                                     required="true"
+                                     requiredMessage="El artista es obligatorio"
+                                     maxlength="50"/>
+                    </div>
+
+                    <div class="campo">
+                        <h:outputLabel value="Cantidad *" styleClass="labels"/>
+                        <p:spinner value="#{viniloBean.cantidad}"
+                                   min="0"
+                                   required="true"/>
+                    </div>
+
+                    <div class="campo">
+                        <h:outputLabel value="Precio *" styleClass="labels"/>
+                        <p:inputText value="#{viniloBean.precio}"
+                                     placeholder="0.00"
+                                     required="true"
+                                     requiredMessage="El precio es obligatorio">
+                            <f:convertNumber type="number"/>
+                        </p:inputText>
+                    </div>
+
+                    <div class="campo">
+                        <h:outputLabel value="Imagen (URL del bucket) *" styleClass="labels"/>
+                        <p:inputText value="#{viniloBean.imagen}"
+                                     placeholder="https://tu-bucket.publico/imagen.jpg"
+                                     required="true"
+                                     requiredMessage="La imagen es obligatoria"/>
+                    </div>
+
+                </h:panelGroup>
+
+                <!-- Botones -->
+                <div class="botones">
+
+                    <p:commandButton id="botonGuardar"
+                                     value="Guardar"
+                                     action="#{viniloBean.guardarVinilo}"
+                                     process="@form"
+                                     update=":formVinilo :formTabla:tablaVinilos :msgs"
+                                     resetValues="true"/>
+
+                    <p:commandButton id="botonModificar"
+                                     value="Modificar"
+                                     action="#{viniloBean.modificarVinilo}"
+                                     process="@form"
+                                     update=":formVinilo :formTabla:tablaVinilos :msgs"
+                                     disabled="#{viniloBean.viniloSeleccionado == null}"/>
+
+                    <p:commandButton id="botonEliminar"
+                                     value="Eliminar"
+                                     action="#{viniloBean.eliminarVinilo}"
+                                     process="@this"
+                                     update=":formVinilo :formTabla:tablaVinilos :msgs"
+                                     disabled="#{viniloBean.viniloSeleccionado == null}">
+                        <p:confirm header="Confirmar eliminación"
+                                   message="¿Estás seguro de eliminar este vinilo?"
+                                   icon="pi pi-exclamation-triangle"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="Limpiar"
+                                     action="#{viniloBean.limpiarCampos}"
+                                     process="@this"
+                                     update=":formVinilo"
+                                     resetValues="true"
+                                     immediate="true"/>
+
+                </div>
+
+                <p:confirmDialog global="true"
+                                 showEffect="fade"
+                                 hideEffect="fade"
+                                 responsive="true"
+                                 width="400">
+                    <p:commandButton value="Sí, eliminar"
+                                     type="button"
+                                     icon="pi pi-check"
+                                     styleClass="ui-confirmdialog-yes"/>
+
+                    <p:commandButton value="Cancelar"
+                                     type="button"
+                                     icon="pi pi-times"
+                                     styleClass="ui-confirmdialog-no"/>
+                </p:confirmDialog>
+
+            </h:form>
+
+        </div>
+
+        <br/><br/>
+
+        <!-- PARTE 2: Buscador y tabla -->
+        <div style="display: flex; align-items: center;
+                    justify-content: space-between; max-width: 1100px;
+                    margin-bottom: 15px; flex-wrap: wrap; gap: 15px;">
+
+            <h1 style="margin: 0;">Vinilos registrados</h1>
+
+            <h:form id="formBusqueda">
+
+                <div class="buscador_icono">
+                    <p:inputText id="buscador"
+                                 value="#{viniloBean.filtroNombre}"
+                                 placeholder="Buscar por nombre">
+                        <p:ajax event="keyup"
+                                process="@this"
+                                update=":formTabla:tablaVinilos"/>
+                    </p:inputText>
+                </div>
+
+            </h:form>
+
+        </div>
+
+        <div class="registro">
+
+            <h:form id="formTabla">
+
+                <p:dataTable id="tablaVinilos"
+                             value="#{viniloBean.buscarVinilos()}"
+                             var="vinilo"
+                             style="width: 100%;"
+                             selection="#{viniloBean.viniloSeleccionado}"
+                             rowKey="#{vinilo.idVinilo}"
+                             selectionMode="single"
+                             emptyMessage="No se encontraron vinilos">
+
+                    <p:ajax event="rowSelect"
+                            listener="#{viniloBean.cargarViniloSeleccionado}"
+                            update=":formVinilo:formularioVinilo
+                                    :formVinilo:botonModificar
+                                    :formVinilo:botonEliminar"/>
+
+                    <p:column headerText="ID">
+                        <h:outputText value="#{vinilo.idVinilo}"/>
+                    </p:column>
+
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{vinilo.nombre}"/>
+                    </p:column>
+
+                    <p:column headerText="Género">
+                        <h:outputText value="#{vinilo.genero}"/>
+                    </p:column>
+
+                    <p:column headerText="Descripción">
+                        <h:outputText value="#{vinilo.descripcion}"/>
+                    </p:column>
+
+                    <p:column headerText="Artista">
+                        <h:outputText value="#{vinilo.artista}"/>
+                    </p:column>
+
+                    <p:column headerText="Cantidad">
+                        <h:outputText value="#{vinilo.cantidad}"/>
+                    </p:column>
+
+                    <p:column headerText="Precio">
+                        <h:outputText value="#{vinilo.precio}">
+                            <f:convertNumber type="currency"
+                                             currencySymbol="$"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Imagen">
+                        <p:graphicImage url="#{vinilo.imagen}"
+                                        width="50"
+                                        height="50"
+                                        rendered="#{not empty vinilo.imagen}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+        </div>
+
+    </div>
+
+</h:body>
+</html>
