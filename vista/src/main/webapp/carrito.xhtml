@@ -1,0 +1,196 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<h:head>
+    <title>Mi carrito</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0"/>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8eeee;
+            color: #514747;
+        }
+
+        .barra {
+            background-color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px #dddddd;
+        }
+
+        .barra a {
+            color: #514747;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .contenedor {
+            max-width: 850px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #d84c58;
+        }
+
+        .producto {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .portada {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            background-color: #fafafa;
+        }
+
+        .datos {
+            flex: 1;
+        }
+
+        .datos h3 {
+            margin: 0 0 8px;
+        }
+
+        .datos p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .cantidad {
+            width: 45px;
+            padding: 5px;
+        }
+
+        .resumen {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            color: #d84c58;
+        }
+
+        .boton {
+            display: inline-block;
+            background-color: #514747;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .boton:hover {
+            background-color: #766363;
+        }
+
+        .seguir {
+            color: #514747;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+
+        @media (max-width: 500px) {
+            .contenedor {
+                margin: 15px;
+                padding: 15px;
+            }
+
+            .producto {
+                gap: 10px;
+            }
+
+            .portada {
+                width: 75px;
+                height: 75px;
+            }
+
+            .barra {
+                padding: 15px;
+            }
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+    <div class="barra">
+        <h:link outcome="/index.xhtml">
+            Tienda de vinilos
+        </h:link>
+
+        <h:link outcome="/login.xhtml">
+            Iniciar sesión
+        </h:link>
+    </div>
+
+    <div class="contenedor">
+
+        <h2>Mi carrito</h2>
+
+        <div class="producto">
+
+            <h:graphicImage
+                    value="/imagenes/vinilo1.jpg"
+                    styleClass="portada"
+                    alt="Portada del vinilo"/>
+
+            <div class="datos">
+                <h3>Nombre del vinilo</h3>
+                <p>Artista</p>
+                <p>Precio: $250.00</p>
+            </div>
+
+            <div>
+                <label for="cantidad1">Cantidad</label>
+                <br/>
+                <input type="number"
+                       id="cantidad1"
+                       class="cantidad"
+                       value="1"
+                       min="1"/>
+            </div>
+
+        </div>
+
+        <div class="resumen">
+
+            <p>Subtotal: $250.00</p>
+
+            <p class="total">Total: $250.00</p>
+
+            <h:link outcome="/index.xhtml"
+                    styleClass="seguir">
+                Seguir comprando
+            </h:link>
+
+            <button type="button" class="boton">
+                Comprar
+            </button>
+
+        </div>
+
+    </div>
+
+</h:body>
+</html>
