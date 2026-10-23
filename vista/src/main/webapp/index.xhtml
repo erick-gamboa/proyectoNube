@@ -3,95 +3,232 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>SAUAP</title>
-       <!-- <h:outputStylesheet library="primefaces-saga" name="theme.css"/>-->
-        <link rel="stylesheet"  type="text/css"  href="resources/css/style.css"/>
-        <style>
-            body {
-                margin: 0;
-                font-family: Arial, sans-serif;
-                background-color: #F8EDEB; !important;
-                color: #5b4747;
+<h:head>
+
+
+    <title>Tienda de vinilos</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0"/>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8eeee;
+            color: #514747;
+        }
+
+        .barra {
+            height: 55px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-shadow: 0 2px 5px #dddddd;
+        }
+
+        .nombre {
+            font-size: 17px;
+            font-weight: bold;
+            color: #514747;
+            text-decoration: none;
+        }
+
+        .opciones {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .opciones a {
+            text-decoration: none;
+            color: #514747;
+            font-weight: bold;
+        }
+
+        .catalogo {
+            max-width: 1050px;
+            margin: 15px auto;
+            padding: 15px;
+            background-color: white;
+
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .vinilo {
+            padding: 12px;
+            border-right: 1px solid #eeeeee;
+            border-bottom: 1px solid #eeeeee;
+            background-color: white;
+            min-width: 0;
+        }
+
+        .portada {
+            width: 100%;
+            height: 190px;
+            object-fit: contain;
+            background-color: #fafafa;
+        }
+
+        .titulo {
+            color: #d84c58;
+            font-size: 15px;
+            margin: 12px 0 5px;
+        }
+
+        .artista {
+            font-size: 13px;
+            color: #777777;
+        }
+
+        .precio {
+            color: #d84c58;
+            font-weight: bold;
+            margin: 12px 0;
+        }
+
+        .existencias {
+            color: #6ab85a;
+            font-size: 12px;
+        }
+
+        .cantidad {
+            width: 60px;
+            padding: 6px;
+            margin: 8px 0;
+        }
+
+        .boton {
+            background-color: #514747;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 9px 12px;
+            cursor: pointer;
+        }
+
+        .boton:hover {
+            background-color: #766363;
+        }
+
+        .inferior {
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        @media (max-width: 650px) {
+            .catalogo {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 420px) {
+            .catalogo {
+                grid-template-columns: 1fr;
             }
 
-
-            /* =========================
-               MENÚ SUPERIOR
-               ========================= */
-
-            .menu_superior {
-                display: flex;
-                align-items: center;
-                gap: 30px;
-                padding: 15px 25px;
-                background-color: #ffffff; !important;
-                border-bottom: 1px solid #ddd;
+            .barra {
+                padding: 0 12px;
             }
+        }
+    </style>
+</h:head>
 
-            .menu_superior .menu_btn {
-                flex: 1;
+<h:body>
 
-                display: flex;
-                justify-content: center;
-                align-items: center;
+    <div class="barra">
 
-                padding: 12px 16px;
+        <h:link outcome="/index.xhtml"
+                styleClass="nombre">
+            Nombre del proyecto
+        </h:link>
 
-                background-color: transparent;
-                border: none;
-                border-radius: 6px;
+        <div class="opciones">
 
-                color: #5b4747;
-                font-size: 16px;
-                font-weight: 600;
-                text-decoration: none;
+            <h:link outcome="/carrito.xhtml" styleClass="menu_btn">
+                <img src="#{request.contextPath}/resources/images/carrito.png"
+                     width="30" height="30" alt="Carrito"/>
+                <span style="font-size: 16px; font-weight: bold;"></span>
+            </h:link>
 
-                text-align: center;
-            }
+            <h:link outcome="/login.xhtml" styleClass="menu_btn">
+                <img src="#{request.contextPath}/resources/images/login.png"
+                     width="30" height="30" alt="Iniciar sesión"/>
+                <span style="font-size: 16px; font-weight: bold;">Iniciar sesión</span>
+            </h:link>
 
-            .menu_superior .menu_btn:hover {
-                background-color: #ffffff;
-            }
+        </div>
+    </div>
 
-            /* =========================
-               CONTENIDO PRINCIPAL
-               ========================= */
 
-            .principal {
-                text-align: center;
-                margin-top: 0;
+    <h:form id="formCatalogo">
 
-                min-height: calc(100vh - 75px);
-                background-image: url("#{request.contextPath}/resources/images/fondo.png");
-                background-size: contain;
-                background-color: #F8EDEB; !important;
-                background-position: center;
-                background-repeat: no-repeat;
 
-                padding-top: 150px;
-                box-sizing: border-box;
-            }
-        </style>
-    </h:head>
 
-    <h:body>
-        <h:form>
-            <div class="menu_superior"  style="background-color: #ffffff;">
-                <h:link value="Alta de profesores" outcome="profesor" styleClass="menu_btn" style="font-size: 20px; font-weight: bold;"/>
-                <h:link value="Unidades de aprendizaje" outcome="unidad" styleClass="menu_btn" style="font-size: 20px; font-weight: bold;" />
-                <h:link value="Asignacion de materias" outcome="asignacion" styleClass="menu_btn" style="font-size: 20px; font-weight: bold;" />
-                <h:link value="Consultas" outcome="consultas" styleClass="menu_btn" style="font-size: 20px; font-weight: bold;" />
-                <h:link value="Inventario de Vinilos" outcome="vinilos" styleClass="menu_btn" style="font-size: 20px; font-weight: bold;" />
+        <h:outputText value="Cantidad de vinilos: #{viniloBean.vinilos.size()}"/>
+        <div class="catalogo">
 
-            </div>
-        </h:form>
+            <ui:repeat value="#{viniloBean.vinilos}"
+                       var="vinilo">
 
-        <div class="principal">
+                <div class="vinilo">
+
+                    <h:graphicImage
+
+                            value="#/resources/images/#{vinilo.imagen}"
+                            styleClass="portada"
+                            alt="Portada del vinilo"/>
+                    <h:outputText value="Imagen guardada: #{vinilo.imagen}"/>
+
+                    <div class="titulo">
+                        <h:outputText value="#{vinilo.nombre}"/>
+                    </div>
+
+                    <div class="artista">
+                        <h:outputText value="#{vinilo.artista}"/>
+                    </div>
+
+                    <div class="precio">
+                        <h:outputText value="#{vinilo.precio}">
+                            <f:convertNumber type="currency"
+                                             currencySymbol="$"
+                                             locale="es_MX"/>
+                        </h:outputText>
+                    </div>
+
+                    <div class="existencias">
+                        Disponibles:
+                        <h:outputText value="#{vinilo.cantidad}"/>
+                    </div>
+
+                    <div class="inferior">
+
+                        <p:commandButton
+                                value="Agregar al carrito"
+                                action="#{carritoBean.agregar(vinilo)}"
+                                styleClass="boton"
+                                process="@this"
+                                update="@form"/>
+
+                    </div>
+
+                </div>
+
+            </ui:repeat>
 
         </div>
 
-    </h:body>
+    </h:form>
+
+</h:body>
+
 
 </html>
