@@ -148,7 +148,7 @@
 
         <h:link outcome="/index.xhtml"
                 styleClass="nombre">
-            Nombre del proyecto
+            VINILO
         </h:link>
 
         <div class="opciones">
@@ -176,7 +176,7 @@
 
         <div class="catalogo">
 
-            <h:outputText value="Cantidad de vinilos: #{viniloBean.listaVinilos.size()}"/>
+
             <ui:repeat value="#{viniloBean.listaVinilos}"
                        var="vinilo">
 
@@ -187,7 +187,7 @@
                             value="/resources/images/#{vinilo.imagen}"
                             styleClass="portada"
                             alt="Portada del vinilo"/>
-                    <h:outputText value="Imagen guardada: #{vinilo.imagen}"/>
+
 
                     <div class="titulo">
                         <h:outputText value="#{vinilo.nombre}"/>
