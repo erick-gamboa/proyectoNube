@@ -173,17 +173,18 @@
 
 
 
-        <h:outputText value="Cantidad de vinilos: #{viniloBean.vinilos.size()}"/>
+
         <div class="catalogo">
 
-            <ui:repeat value="#{viniloBean.vinilos}"
+            <h:outputText value="Cantidad de vinilos: #{viniloBean.listaVinilos.size()}"/>
+            <ui:repeat value="#{viniloBean.listaVinilos}"
                        var="vinilo">
 
                 <div class="vinilo">
 
                     <h:graphicImage
 
-                            value="#/resources/images/#{vinilo.imagen}"
+                            value="/resources/images/#{vinilo.imagen}"
                             styleClass="portada"
                             alt="Portada del vinilo"/>
                     <h:outputText value="Imagen guardada: #{vinilo.imagen}"/>

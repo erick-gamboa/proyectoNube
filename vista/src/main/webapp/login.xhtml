@@ -17,17 +17,18 @@
 
             body {
                 font-family: Arial, sans-serif;
-                background-color: #ffffff;
-                color: #333333;
+                background-color: #fbf5f4;
+                color: #514747;
             }
 
             /* Barra superior con botón Categorías */
             .top-bar {
                 background-color: #ffffff;
-                border-bottom: 1px solid #e0e0e0;
-                padding: 12px 20px;
+                border-bottom: 1px solid #eee5e3;
+                padding: 16px 35px;
                 display: flex;
                 align-items: center;
+                justify-content: space-between;
             }
 
             .btn-categorias {
@@ -45,7 +46,7 @@
             }
 
             .btn-categorias:hover {
-                background-color: #b71c1c;
+                background-color: #f0e2e0;
             }
 
             .menu-icon {
@@ -156,13 +157,8 @@
     </h:head>
 
     <h:body>
-        <!-- Barra superior: botón Categorías a la izquierda -->
-        <div class="top-bar">
-            <button class="btn-categorias" type="button">
-                <span class="menu-icon">☰</span>
-                Categorías
-            </button>
-        </div>
+
+
 
         <div class="login-container">
 
@@ -173,7 +169,6 @@
                 <h1 class="titulo-login">INICIAR SESIÓN</h1>
 
                 <div class="input-group">
-                    <span class="input-icon">👤</span>
                     <label class="campo-label" for="correo">CORREO ELECTRÓNICO</label>
                     <p:inputText id="correo"
                                  styleClass="input-field"
@@ -183,7 +178,6 @@
                 </div>
 
                 <div class="input-group">
-                    <span class="input-icon">🔒</span>
                     <label class="campo-label" for="password">CONTRASEÑA</label>
                     <p:password id="password"
                                 styleClass="input-field"
@@ -192,13 +186,10 @@
                 </div>
 
                 <div class="texto-ayuda">
-                    Los datos de acceso son sensibles a mayúsculas y minúsculas
+                    Los datos de acceso son sensibles a mayusculas y minusculas
                 </div>
 
-                <div class="enlaces-ayuda">
-                    <a href="#">¿Olvidaste tu contraseña?</a>
-                    <a href="#">¿No recibiste el correo de verificación?</a>
-                </div>
+
 
                 <p:commandButton value="INICIAR SESIÓN"
                                  styleClass="btn-iniciar"
