@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Usuarios</title>
+    <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
+    <style>
+        .menu_lateral {
+            width: 220px;
+            float: left;
+            padding: 20px;
+            background: #f8f8f8;
+            min-height: 100vh;
+        }
+        .menu_btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #43252D;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .menu_btn:hover { background: #2a141a; }
+        .cerrar_sesion { background: #8b0000; margin-top: 30px; }
+        .contenido { margin-left: 240px; padding: 20px; }
+        .titulo-pagina { font-size: 28px; font-weight: bold; color: #43252D; margin-bottom: 20px; }
+    </style>
+</h:head>
+
+<h:body>
+
+    <h:form>
+        <div class="menu_lateral">
+            <div class="logo_sauap">
+                <span style="font-size: 32px; font-weight: bold;">VINILOS</span>
+            </div>
+            <div class="menu_opciones">
+                <h:link outcome="vinilos" styleClass="menu_btn"><span style="font-size: 16px;">Inventario</span></h:link>
+                <h:link outcome="stock" styleClass="menu_btn"><span style="font-size: 16px;">Stock</span></h:link>
+                <h:link outcome="tickets" styleClass="menu_btn"><span style="font-size: 16px;">Tickets de compra</span></h:link>
+                <h:link outcome="usuarios" styleClass="menu_btn"><span style="font-size: 16px;">Usuarios</span></h:link>
+            </div>
+            <h:link outcome="login" styleClass="menu_btn cerrar_sesion"><span style="font-size: 16px;">Cerrar sesión</span></h:link>
+        </div>
+    </h:form>
+
+    <div class="contenido">
+        <h1 class="titulo-pagina">Usuarios</h1>
+
+        <p:growl id="msgs" showDetail="true" life="4000"/>
+
+        <h:form id="formUsuarios">
+            <p:dataTable id="tablaUsuarios"
+                         value="#{usuarioBean.listaUsuarios}"
+                         var="usuario"
+                         style="width: 100%;"
+                         selection="#{usuarioBean.usuarioSeleccionado}"
+                         rowKey="#{usuario.idUsuario}"
+                         selectionMode="single"
+                         emptyMessage="No hay usuarios registrados">
+
+                <p:ajax event="rowSelect" listener="#{usuarioBean.cambiarRol}" update=":formUsuarios"/>
+
+                <p:column headerText="ID">
+                    <h:outputText value="#{usuario.idUsuario}"/>
+                </p:column>
+                <p:column headerText="Correo">
+                    <h:outputText value="#{usuario.correo}"/>
+                </p:column>
+                <p:column headerText="Contraseña">
+                    <h:outputText value="#{usuario.password}"/>
+                </p:column>
+                <p:column headerText="Rol">
+                    <p:selectOneMenu value="#{usuarioBean.nuevoRol}">
+                        <f:selectItem itemLabel="user" itemValue="user"/>
+                        <f:selectItem itemLabel="admin" itemValue="admin"/>
+                    </p:selectOneMenu>
+                </p:column>
+            </p:dataTable>
+
+            <p:commandButton value="Guardar Rol"
+                             action="#{usuarioBean.cambiarRol}"
+                             update=":formUsuarios :msgs"/>
+        </h:form>
+    </div>
+
+</h:body>
+</html>

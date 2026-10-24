@@ -72,5 +72,13 @@ public class DelegateVinilo {
         ServiceLocator.getInstanceViniloDAO().delete(vinilo);
     }
 
+    // Actualizar solo stock
+    public void actualizarStock(Integer idVinilo, Integer cantidad) {
+        ServiceLocator.getInstanceViniloDAO().find(idVinilo).ifPresent(vinilo -> {
+            vinilo.setCantidad(cantidad);
+            ServiceLocator.getInstanceViniloDAO().update(vinilo);
+        });
+    }
+
 
 }

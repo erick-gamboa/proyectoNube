@@ -29,6 +29,11 @@ public class Usuario {
     @Column(name = "correo", nullable = false, length = 50)
     private String correo;
 
+    @Size(max = 45)
+    @NotNull
+    @Column(name = "rol", nullable = false, length = 50)
+    private String rol;
+
     public String getCorreo() {
         return correo;
     }
@@ -51,6 +56,14 @@ public class Usuario {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
 

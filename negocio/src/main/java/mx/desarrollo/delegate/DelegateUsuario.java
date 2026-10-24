@@ -22,4 +22,16 @@ public class DelegateUsuario {
         ServiceLocator.getInstanceUsuarioDAO().save(usuario);
     }
 
+    public List<Usuario> obtenerUsuarios(){
+        return ServiceLocator.getInstanceUsuarioDAO().findAll();
+    }
+
+    public void actualizarRol(Integer idUsuario, String rol){
+        Usuario u = ServiceLocator.getInstanceUsuarioDAO().find(idUsuario).orElse(null);
+        if(u != null){
+            u.setRol(rol);
+            ServiceLocator.getInstanceUsuarioDAO().update(u);
+        }
+    }
+
 }

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <title>Stock - Inventario de Vinilos</title>
+
+    <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
+
+    <style>
+        .menu_lateral {
+            width: 220px;
+            float: left;
+            padding: 20px;
+            background: #f8f8f8;
+            min-height: 100vh;
+        }
+
+        .menu_btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #43252D;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .menu_btn:hover {
+            background: #2a141a;
+        }
+
+        .cerrar_sesion {
+            background: #8b0000;
+            margin-top: 30px;
+        }
+
+        .contenido {
+            margin-left: 240px;
+            padding: 20px;
+        }
+
+        .titulo-pagina {
+            font-size: 28px;
+            font-weight: bold;
+            color: #43252D;
+            margin-bottom: 20px;
+        }
+
+        .stock-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .stock-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            background: #fff;
+            position: relative;
+        }
+
+        .stock-card.sin-stock {
+            background: #ffeaea;
+            border-color: #ff6b6b;
+        }
+
+        .sello-sin-stock {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff6b6b;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .stock-imagen {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .stock-nombre {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .stock-cantidad {
+            font-size: 16px;
+            color: #43252D;
+            margin-bottom: 10px;
+        }
+
+        .stock-control {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stock-btn {
+            background: #43252D;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .stock-btn:hover {
+            background: #2a141a;
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+    <!-- Menú lateral -->
+    <h:form>
+        <div class="menu_lateral">
+            <div class="logo_sauap">
+                <span style="font-size: 32px; font-weight: bold;">
+                    VINILOS
+                </span>
+            </div>
+
+            <div class="menu_opciones">
+                <h:link outcome="vinilos" styleClass="menu_btn">
+                    <span style="font-size: 16px; font-weight: bold;">
+                        Inventario
+                    </span>
+                </h:link>
+
+                <h:link outcome="stock" styleClass="menu_btn">
+                    <span style="font-size: 16px; font-weight: bold;">
+                        Stock
+                    </span>
+                </h:link>
+
+                <h:link outcome="tickets" styleClass="menu_btn">
+                    <span style="font-size: 16px; font-weight: bold;">
+                        Tickets de compra
+                    </span>
+                </h:link>
+
+                <h:link outcome="usuarios" styleClass="menu_btn">
+                    <span style="font-size: 16px; font-weight: bold;">
+                        Usuarios
+                    </span>
+                </h:link>
+            </div>
+
+            <h:link outcome="login" styleClass="menu_btn cerrar_sesion">
+                <span style="font-size: 16px; font-weight: bold;">
+                    Cerrar sesión
+                </span>
+            </h:link>
+        </div>
+    </h:form>
+
+    <div class="contenido">
+
+        <h1 class="titulo-pagina">Stock</h1>
+
+        <p:growl id="msgs" showDetail="true" life="4000"/>
+
+        <h:form id="formStock">
+
+            <div class="stock-grid">
+                <ui:repeat value="#{viniloBean.buscarVinilos()}" var="vinilo">
+                    <div class="stock-card #{viniloBean.isSinStock(vinilo.idVinilo) ? 'sin-stock' : ''}">
+                        <h:outputText value="SIN STOCK" styleClass="sello-sin-stock"
+                                      rendered="#{viniloBean.isSinStock(vinilo.idVinilo)}"/>
+
+                        <p:graphicImage url="#{vinilo.imagen}"
+                                        styleClass="stock-imagen"
+                                        rendered="#{not empty vinilo.imagen}"/>
+
+                        <div class="stock-nombre">#{vinilo.nombre}</div>
+
+                        <div class="stock-control">
+                            <p:commandButton value="-"
+                                             styleClass="stock-btn"
+                                             action="#{viniloBean.disminuirStock(vinilo.idVinilo)}"
+                                             update=":formStock :msgs"
+                                             disabled="#{viniloBean.isSinStock(vinilo.idVinilo)}"/>
+
+                            <span class="stock-input">#{viniloBean.getCantidadStock(vinilo.idVinilo)}</span>
+
+                            <p:commandButton value="+"
+                                             styleClass="stock-btn"
+                                             action="#{viniloBean.aumentarStock(vinilo.idVinilo)}"
+                                             update=":formStock :msgs"/>
+                        </div>
+
+                        <div class="stock-cantidad">
+                            Stock: #{viniloBean.getCantidadStock(vinilo.idVinilo)}
+                        </div>
+                    </div>
+                </ui:repeat>
+            </div>
+
+        </h:form>
+
+    </div>
+
+</h:body>
+</html>

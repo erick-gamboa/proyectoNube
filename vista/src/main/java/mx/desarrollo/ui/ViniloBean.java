@@ -12,8 +12,6 @@ import mx.desarrollo.integration.ServiceFacadeLocator;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 
 @Named("viniloBean")
 @SessionScoped
@@ -30,14 +28,26 @@ public class ViniloBean implements Serializable {
     private String imagen;
 
     private String filtroNombre;
-
     private Vinilo viniloSeleccionado;
     private List<Vinilo> listaVinilos;
 
     public ViniloBean() {
-
+        this.facade = ServiceFacadeLocator.getInstanceFacadeVinilo();
+        this.listaVinilos = new ArrayList<Vinilo>();
     }
 
+    @PostConstruct
+    public void init() {
+        try {
+            cargarLista();
+        } catch (Exception e) {
+            FacesContext ctx = FacesContext.getCurrentInstance();
+            if (ctx != null) {
+                ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso",
+                        "No se pudo cargar la lista: " + e.getMessage()));
+            }
+        }
+    }
 
     private FacadeVinilo getFacade() {
         if (this.facade == null) {
@@ -46,24 +56,12 @@ public class ViniloBean implements Serializable {
         return this.facade;
     }
 
-    @PostConstruct
-    public void init() {
-        try {
-            cargarLista();
-        } catch (Exception e) {
-
-            FacesContext ctx = FacesContext.getCurrentInstance();
-            if (ctx != null) {
-                ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "No se pudo cargar la lista de vinilos inicialmente: " + e.getMessage()));
-            }
-        }
-    }
-
     public void guardarVinilo() {
         try {
             FacadeVinilo f = getFacade();
             if (f == null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo inicializar la capa de negocio"));
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo inicializar la capa de negocio"));
                 return;
             }
 
@@ -72,31 +70,35 @@ public class ViniloBean implements Serializable {
             vinilo.setGenero(genero);
             vinilo.setDescripcion(descripcion);
             vinilo.setArtista(artista);
-            vinilo.setCantidad(cantidad);
+            vinilo.setCantidad(0);
             vinilo.setPrecio(precio);
             vinilo.setImagen(imagen);
 
             f.agregarVinilo(vinilo);
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Vinilo guardado correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Vinilo guardado correctamente"));
 
             limpiarCampos();
             cargarLista();
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo guardar el vinilo: " + e.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo guardar: " + e.getMessage()));
         }
     }
 
     public void modificarVinilo() {
         try {
             if (viniloSeleccionado == null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención", "Selecciona un vinilo de la tabla antes de modificar"));
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención", "Selecciona un vinilo de la tabla"));
                 return;
             }
 
             FacadeVinilo f = getFacade();
             if (f == null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo inicializar la capa de negocio"));
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo inicializar la capa de negocio"));
                 return;
             }
 
@@ -104,42 +106,47 @@ public class ViniloBean implements Serializable {
             viniloSeleccionado.setGenero(genero);
             viniloSeleccionado.setDescripcion(descripcion);
             viniloSeleccionado.setArtista(artista);
-            viniloSeleccionado.setCantidad(cantidad);
             viniloSeleccionado.setPrecio(precio);
             viniloSeleccionado.setImagen(imagen);
 
             f.modificarVinilo(viniloSeleccionado);
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Vinilo modificado correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Vinilo modificado correctamente"));
 
             limpiarCampos();
             cargarLista();
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo modificar el vinilo: " + e.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo modificar: " + e.getMessage()));
         }
     }
 
     public void eliminarVinilo() {
         try {
-            if (viniloSeleccionado == null) {FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención", "Selecciona un vinilo de la tabla antes de eliminar"));
+            if (viniloSeleccionado == null) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención", "Selecciona un vinilo de la tabla"));
                 return;
             }
 
             FacadeVinilo f = getFacade();
             if (f == null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo inicializar la capa de negocio"));
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo inicializar la capa de negocio"));
                 return;
             }
 
             f.eliminarVinilo(viniloSeleccionado);
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Vinilo eliminado correctamente"));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Vinilo eliminado correctamente"));
 
             limpiarCampos();
             cargarLista();
-
-
-        } catch (Exception e) {FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo eliminar el vinilo: " + e.getMessage()));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo eliminar: " + e.getMessage()));
         }
     }
 
@@ -153,7 +160,6 @@ public class ViniloBean implements Serializable {
         this.imagen = "";
         this.viniloSeleccionado = null;
     }
-
 
     public void cargarViniloSeleccionado() {
         if (viniloSeleccionado != null) {
@@ -173,7 +179,7 @@ public class ViniloBean implements Serializable {
             this.listaVinilos = f.obtenerVinilos();
         }
         if (this.listaVinilos == null) {
-            this.listaVinilos = new ArrayList<>();
+            this.listaVinilos = new ArrayList<Vinilo>();
         }
     }
 
@@ -186,13 +192,60 @@ public class ViniloBean implements Serializable {
             return listaVinilos;
         }
 
+        List<Vinilo> resultado = new ArrayList<Vinilo>();
         String filtro = filtroNombre.toLowerCase().trim();
-        return listaVinilos.stream().filter(v -> v.getNombre() != null && v.getNombre().toLowerCase().contains(filtro)).collect(Collectors.toList());
+        for (Vinilo v : listaVinilos) {
+            if (v.getNombre() != null && v.getNombre().toLowerCase().contains(filtro)) {
+                resultado.add(v);
+            }
+        }
+        return resultado;
     }
 
+    /* Stock */
 
+    public Integer getCantidadStock(Integer idVinilo) {
+        if (listaVinilos == null) {
+            return 0;
+        }
+        for (Vinilo v : listaVinilos) {
+            if (v.getIdVinilo() != null && v.getIdVinilo().equals(idVinilo)) {
+                return v.getCantidad();
+            }
+        }
+        return 0;
+    }
 
+    public void disminuirStock(Integer idVinilo) {
+        Integer actual = getCantidadStock(idVinilo);
+        if (actual != null && actual > 0) {
+            ajustarStock(idVinilo, actual - 1);
+        }
+    }
 
+    public void aumentarStock(Integer idVinilo) {
+        Integer actual = getCantidadStock(idVinilo);
+        ajustarStock(idVinilo, actual + 1);
+    }
+
+    public void ajustarStock(Integer idVinilo, Integer nuevaCantidad) {
+        try {
+            FacadeVinilo f = getFacade();
+            if (f == null) {
+                return;
+            }
+            f.actualizarStock(idVinilo, nuevaCantidad);
+            cargarLista();
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo actualizar stock: " + e.getMessage()));
+        }
+    }
+
+    public boolean isSinStock(Integer idVinilo) {
+        Integer cant = getCantidadStock(idVinilo);
+        return cant != null && cant == 0;
+    }
 
     public String getNombre() {
         return nombre;
@@ -268,5 +321,9 @@ public class ViniloBean implements Serializable {
 
     public List<Vinilo> getListaVinilos() {
         return listaVinilos;
+    }
+
+    public void setListaVinilos(List<Vinilo> listaVinilos) {
+        this.listaVinilos = listaVinilos;
     }
 }

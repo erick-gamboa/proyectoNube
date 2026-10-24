@@ -79,9 +79,21 @@
                     </span>
                 </h:link>
 
+                <h:link outcome="stock" styleClass="menu_btn">
+                    <span style="font-size: 18px; font-weight: bold;">
+                        Stock
+                    </span>
+                </h:link>
+
                 <h:link outcome="tickets" styleClass="menu_btn">
                     <span style="font-size: 18px; font-weight: bold;">
                         Tickets de compra
+                    </span>
+                </h:link>
+
+                <h:link outcome="usuarios" styleClass="menu_btn">
+                    <span style="font-size: 18px; font-weight: bold;">
+                        Usuarios
                     </span>
                 </h:link>
             </div>
@@ -145,13 +157,6 @@
                                      required="true"
                                      requiredMessage="El artista es obligatorio"
                                      maxlength="50"/>
-                    </div>
-
-                    <div class="campo">
-                        <h:outputLabel value="Cantidad *" styleClass="labels"/>
-                        <p:spinner value="#{viniloBean.cantidad}"
-                                   min="0"
-                                   required="true"/>
                     </div>
 
                     <div class="campo">

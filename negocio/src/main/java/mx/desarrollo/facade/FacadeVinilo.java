@@ -30,4 +30,8 @@ public class FacadeVinilo {
     public List<Vinilo> obtenerVinilos() {
         return delegateVinilo.getVinilos();
     }
+
+    public void actualizarStock(Integer idVinilo, Integer cantidad) {
+        delegateVinilo.actualizarStock(idVinilo, cantidad);
+    }
 }

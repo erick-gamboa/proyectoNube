@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Tickets de compra</title>
+    <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
+    <style>
+        .menu_lateral {
+            width: 220px;
+            float: left;
+            padding: 20px;
+            background: #f8f8f8;
+            min-height: 100vh;
+        }
+        .menu_btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #43252D;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .menu_btn:hover { background: #2a141a; }
+        .cerrar_sesion { background: #8b0000; margin-top: 30px; }
+        .contenido { margin-left: 240px; padding: 20px; }
+        .titulo-pagina { font-size: 28px; font-weight: bold; color: #43252D; margin-bottom: 20px; }
+    </style>
+</h:head>
+
+<h:body>
+
+    <h:form>
+        <div class="menu_lateral">
+            <div class="logo_sauap">
+                <span style="font-size: 32px; font-weight: bold;">VINILOS</span>
+            </div>
+            <div class="menu_opciones">
+                <h:link outcome="vinilos" styleClass="menu_btn"><span style="font-size: 16px;">Inventario</span></h:link>
+                <h:link outcome="stock" styleClass="menu_btn"><span style="font-size: 16px;">Stock</span></h:link>
+                <h:link outcome="tickets" styleClass="menu_btn"><span style="font-size: 16px;">Tickets de compra</span></h:link>
+                <h:link outcome="usuarios" styleClass="menu_btn"><span style="font-size: 16px;">Usuarios</span></h:link>
+            </div>
+            <h:link outcome="login" styleClass="menu_btn cerrar_sesion"><span style="font-size: 16px;">Cerrar sesión</span></h:link>
+        </div>
+    </h:form>
+
+    <div class="contenido">
+        <h1 class="titulo-pagina">Tickets de compra</h1>
+        <p>Módulo de tickets de compra en construcción.</p>
+    </div>
+
+</h:body>
+</html>
