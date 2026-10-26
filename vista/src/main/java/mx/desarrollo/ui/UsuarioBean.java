@@ -99,7 +99,7 @@ public class UsuarioBean implements Serializable {
             cargarLista();
 
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Rol actualizado correctamente"));
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Rol actualizado correctamente"));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo cambiar el rol: " + e.getMessage()));

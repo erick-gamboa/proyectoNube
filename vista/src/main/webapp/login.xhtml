@@ -6,8 +6,9 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-        <title>Iniciar Sesión - Vinilos</title>
+        <title>Iniciar Sesion - Vinilos</title>
         <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
+
         <style>
             * {
                 box-sizing: border-box;
@@ -16,148 +17,190 @@
             }
 
             body {
+                margin: 0;
                 font-family: Arial, sans-serif;
-                background-color: #fbf5f4;
-                color: #514747;
+                background-color: #f8eeee;!important;
+                color: #f8eeee;
             }
 
-            /* Barra superior con botón Categorías */
-            .top-bar {
+            /* Barra superior */
+            .barra {
                 background-color: #ffffff;
-                border-bottom: 1px solid #eee5e3;
-                padding: 16px 35px;
+                height: 70px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                padding: 0 38px;
+                box-shadow: 0 2px 5px rgba(81, 71, 71, 0.15);
+                border-bottom: 1px solid #eadede;
             }
 
-            .btn-categorias {
-                background-color: #d32f2f;
-                color: #ffffff;
-                border: none;
-                border-radius: 6px;
-                padding: 10px 20px;
-                font-size: 18px;
+            .nombre {
+                color: #6B4636;
+                font-size: 20px;
                 font-weight: bold;
-                cursor: pointer;
+                text-decoration: none;
+                letter-spacing: 0;
+            }
+
+            .opciones {
+                display: flex;
+                align-items: center;
+                gap: 25px;
+            }
+
+            .menu_btn {
                 display: flex;
                 align-items: center;
                 gap: 8px;
+                color: #76515e;
+                text-decoration: none;
+                font-size: 15px;
+                font-weight: bold;
             }
 
-            .btn-categorias:hover {
-                background-color: #f0e2e0;
+            .menu_btn:hover {
+                color: #c76b8a;
             }
 
-            .menu-icon {
-                font-size: 20px;
+            .menu_btn img {
+                object-fit: contain;
             }
 
-            /* Contenedor del formulario de login */
+            /* Formulario */
             .login-container {
                 max-width: 450px;
-                margin: 40px auto;
-                padding: 0 20px;
+                margin: 65px auto;
+                padding: 35px;
+                background-color: #ffffff;
+                border: 1px solid #f2dce4;
+                border-radius: 18px;
+                box-shadow: 0 5px 20px rgba(199, 107, 138, 0.10);
             }
 
             .titulo-login {
-                color: #7ed957;
+                color: #514747;
                 font-size: 28px;
                 font-weight: bold;
                 margin-bottom: 30px;
+                text-align: center;
                 letter-spacing: 1px;
             }
 
             .campo-label {
                 display: block;
-                font-size: 16px;
-                color: #666666;
+                font-size: 14px;
+                color: #76515e;
                 margin-bottom: 8px;
-                font-weight: normal;
+                font-weight: bold;
             }
 
             .input-group {
-                position: relative;
-                margin-bottom: 20px;
-            }
-
-            .input-icon {
-                position: absolute;
-                left: 18px;
-                top: 50%;
-                transform: translateY(-50%);
-                font-size: 20px;
-                color: #999999;
-                pointer-events: none;
-                z-index: 2;
+                margin-bottom: 22px;
             }
 
             .input-field {
                 width: 100%;
-                padding: 14px 16px 14px 50px;
-                font-size: 16px;
-                border: none;
-                border-radius: 30px;
-                background-color: #f0f0f0;
-                color: #333333;
+                padding: 14px 18px;
+                font-size: 15px;
+                border: 1px solid #ead5dd;
+                border-radius: 25px;
+                background-color: #fff8fa;
+                color: #514747;
                 outline: none;
             }
 
             .input-field::placeholder {
-                color: #999999;
+                color: #b69da6;
             }
 
             .input-field:focus {
-                background-color: #e8e8e8;
+                border-color: #d58aa3;
+                background-color: #ffffff;
             }
 
             .texto-ayuda {
-                font-size: 14px;
-                color: #555555;
-                margin-bottom: 10px;
+                font-size: 13px;
+                color: #987783;
+                margin-bottom: 22px;
             }
 
-            .enlaces-ayuda {
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 25px;
-                font-size: 14px;
-            }
-
-            .enlaces-ayuda a {
-                color: #333333;
-                text-decoration: underline;
-            }
-
-            .enlaces-ayuda a:hover {
-                color: #7ed957;
-            }
 
             .btn-iniciar {
                 width: 100%;
-                background-color: #7ed957;
-                color: #ffffff;
-                border: none;
-                border-radius: 30px;
-                padding: 14px 0;
-                font-size: 16px;
-                font-weight: bold;
+                background-color: #d58aa3 !important;
+                color: #ffffff !important;
+                border: none !important;
+                border-radius: 25px !important;
+                padding: 14px 0 !important;
+                font-size: 15px !important;
+                font-weight: bold !important;
                 cursor: pointer;
             }
 
             .btn-iniciar:hover {
-                background-color: #6cc24a;
+                background-color: #c76b8a !important;
             }
 
-            /* Mensajes de PrimeFaces */
+            /* Botón crear cuenta */
+            .btn-registro {
+                display: block !important;
+                width: 100%;
+                margin-top: 14px;
+                background-color: #ffffff !important;
+                color: #c76b8a !important;
+                border: 1px solid #d58aa3 !important;
+                border-radius: 25px !important;
+                padding: 13px 0 !important;
+                font-size: 15px !important;
+                font-weight: bold !important;
+                text-align: center;
+                text-decoration: none !important;
+            }
+
+            .btn-registro:hover {
+                background-color: #fff0f5 !important;
+            }
+
             .ui-messages {
                 margin-bottom: 20px;
             }
+
+
         </style>
     </h:head>
 
     <h:body>
 
+
+        <div class="barra">
+
+            <h:link outcome="/index.xhtml"
+                    styleClass="nombre">
+                VINILO
+            </h:link>
+
+            <div class="opciones">
+
+                <h:link outcome="/carrito.xhtml"
+                        styleClass="menu_btn">
+                    <img src="#{request.contextPath}/resources/images/carrito.png"
+                         width="30"
+                         height="30"
+                         alt="Carrito"/>
+                </h:link>
+
+                <h:link outcome="/login.xhtml"
+                        styleClass="menu_btn">
+                    <img src="#{request.contextPath}/resources/images/login.png"
+                         width="30"
+                         height="30"
+                         alt="Iniciar sesion"/>
+                    <span>Iniciar sesion</span>
+                </h:link>
+
+            </div>
+        </div>
 
 
         <div class="login-container">
@@ -166,10 +209,10 @@
 
                 <p:messages id="messages" showDetail="true" closable="true"/>
 
-                <h1 class="titulo-login">INICIAR SESIÓN</h1>
+                <h1 class="titulo-login">INICIAR SESION</h1>
 
                 <div class="input-group">
-                    <label class="campo-label" for="correo">CORREO ELECTRÓNICO</label>
+                    <label class="campo-label" for="correo">CORREO ELECTRONICO</label>
                     <p:inputText id="correo"
                                  styleClass="input-field"
                                  placeholder="Ingresa tu correo:"
@@ -196,6 +239,10 @@
                                  action="#{loginUI.login()}"
                                  update="messages"
                                  process="@form"/>
+
+                <p:button value="CREAR CUENTA"
+                          outcome="/registro.xhtml"
+                          styleClass="btn-registro"/>
 
             </h:form>
 
