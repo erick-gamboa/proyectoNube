@@ -3,6 +3,8 @@
   <component name="WebContextManager">
     <option name="state">
       <map>
+        <entry key="file://$PROJECT_DIR$/vista/src/main/webapp/asignacion.xhtml" value="file://$PROJECT_DIR$/vista/src/main/webapp" />
+        <entry key="file://$PROJECT_DIR$/vista/src/main/webapp/checkout.xhtml" value="file://$PROJECT_DIR$/vista/src/main/webapp" />
         <entry key="file://$PROJECT_DIR$/vista/src/main/webapp/index.xhtml" value="file://$PROJECT_DIR$/vista/src/main/webapp" />
         <entry key="file://$PROJECT_DIR$/vista/src/main/webapp/login.xhtml" value="file://$PROJECT_DIR$/vista/src/main/webapp" />
         <entry key="file://$PROJECT_DIR$/vista/src/main/webapp/unidad.xhtml" value="file://$PROJECT_DIR$/vista/src/main/webapp" />

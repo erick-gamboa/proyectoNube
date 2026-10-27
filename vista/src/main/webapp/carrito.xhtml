@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
 
 <h:head>
     <title>Mi carrito</title>
@@ -184,13 +186,12 @@
                 Seguir comprando
             </h:link>
 
-            <button type="button" class="boton">
-                Comprar
-            </button>
+            <p:button value="Comprar" outcome="checkout" styleClass="boton"/>
 
         </div>
 
     </div>
+</h:form>
 
 </h:body>
 </html>
