@@ -1,10 +1,13 @@
 package mx.desarrollo.ui;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -46,6 +49,49 @@ public class CheckoutBean implements Serializable {
                 detalles.add(d);
             }
         }
+    }
+
+    public String pagar() {
+        if (detalles.isEmpty()) {
+            mensaje(FacesMessage.SEVERITY_WARN, "Tu carrito está vacío");
+            return null;
+        }
+        String digitos = numeroTarjeta == null ? "" : numeroTarjeta.replaceAll("\\D", "");
+        if (digitos.length() != 16) {
+            mensaje(FacesMessage.SEVERITY_ERROR, "El número de tarjeta debe tener 16 dígitos");
+            return null;
+        }
+        if (!vencimientoValido()) {
+            mensaje(FacesMessage.SEVERITY_ERROR, "La tarjeta está vencida o la fecha no es válida");
+            return null;
+        }
+        String codigo = codigoSeguridad == null ? "" : codigoSeguridad.trim();
+        if (!codigo.matches("\\d{3,4}")) {
+            mensaje(FacesMessage.SEVERITY_ERROR, "El código de seguridad debe tener 3 o 4 dígitos");
+            return null;
+        }
+        numeroTarjeta = null;
+        titular = null;
+        vencimiento = null;
+        codigoSeguridad = null;
+        mensaje(FacesMessage.SEVERITY_INFO, "Pago procesado correctamente");
+        return null;
+    }
+
+    private boolean vencimientoValido() {
+        if (vencimiento == null || !vencimiento.matches("\\d{2}/\\d{2}")) {
+            return false;
+        }
+        int mes = Integer.parseInt(vencimiento.substring(0, 2));
+        int anio = 2000 + Integer.parseInt(vencimiento.substring(3, 5));
+        if (mes < 1 || mes > 12) {
+            return false;
+        }
+        return !YearMonth.of(anio, mes).isBefore(YearMonth.now());
+    }
+
+    private void mensaje(FacesMessage.Severity severidad, String texto) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severidad, texto, null));
     }
 
     public double getSubtotal() {
