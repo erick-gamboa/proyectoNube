@@ -5,52 +5,280 @@
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-    <title>Crear cuenta</title>
+    <title>Crear cuenta - VINILO</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0"/>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8eeee;
+            color: #514747;
+        }
+
+        /* Barra superior */
+        .barra {
+            background-color: #ffffff;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 38px;
+            box-shadow: 0 2px 5px rgba(81, 71, 71, 0.15);
+            border-bottom: 1px solid #eadede;
+        }
+
+        .nombre {
+            color: #6B4636;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+            letter-spacing: 0;
+        }
+
+        .opciones {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .opciones a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #76515e;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .opciones a:hover {
+            color: #c76b8a;
+        }
+
+        .opciones img {
+            object-fit: contain;
+        }
+
+
+        .contenedor {
+            min-height: calc(100vh - 71px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 15px;
+            box-sizing: border-box;
+        }
+
+        .tarjeta {
+            width: 100%;
+            max-width: 450px;
+            padding: 35px;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            border: 1px solid #f2dce4;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(199, 107, 138, 0.10);
+        }
+
+        .titulo {
+            color: #6B4636;
+            font-size: 28px;
+            font-weight: bold;
+            margin: 0 0 30px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .campo {
+            margin-bottom: 22px;
+        }
+
+        .etiqueta {
+            display: block;
+            font-size: 14px;
+            color: #6B4636;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .entrada {
+            display: block;
+            width: 100% !important;
+            box-sizing: border-box;
+        }
+
+        .entrada input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 14px 18px;
+            font-size: 15px;
+            border: 1px solid #ead5dd;
+            border-radius: 25px;
+            background-color: #fff8fa;
+            color: #514747;
+            outline: none;
+        }
+
+        .entrada input:focus {
+            border-color: #d58aa3;
+            background-color: #ffffff;
+        }
+
+
+        .boton {
+            display: block !important;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 10px;
+            background-color: #d58aa3 !important;
+            color: #ffffff !important;
+            border: none !important;
+            border-radius: 25px !important;
+            padding: 14px 0 !important;
+            font-size: 15px !important;
+            font-weight: bold !important;
+            cursor: pointer;
+        }
+
+        .boton:hover {
+            background-color: #c76b8a !important;
+        }
+
+
+        .volver {
+            display: block !important;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 14px;
+            padding: 13px 0;
+            text-align: center;
+            text-decoration: none !important;
+            color: #c76b8a !important;
+            background-color: #ffffff !important;
+            border: 1px solid #d58aa3 !important;
+            border-radius: 25px !important;
+            font-size: 15px !important;
+            font-weight: bold !important;
+        }
+
+        .volver:hover {
+            background-color: #fff0f5 !important;
+        }
+
+        .ui-messages {
+            margin-bottom: 20px;
+        }
+
+
+    </style>
 </h:head>
 
 <h:body>
 
-    <h:form id="registroForm">
+    <div class="barra">
 
-        <h2>Crear cuenta</h2>
+        <h:link outcome="/index.xhtml"
+                styleClass="nombre">
+            VINILO
+        </h:link>
 
-        <p:messages id="messages"
-                    showDetail="true"
-                    closable="true"/>
+        <div class="opciones">
 
-        <p:outputLabel for="nombre" value="Nombre de usuario"/>
-        <p:inputText id="nombre"
-                     value="#{registroBean.usuario.nombreUsuario}"
-                     required="true"/>
+            <h:link outcome="/carrito.xhtml">
+                <img src="#{request.contextPath}/resources/images/carrito.png"
+                     width="30"
+                     height="30"
+                     alt="Carrito"/>
+            </h:link>
 
-        <br/><br/>
+            <h:link outcome="/login.xhtml">
+                <img src="#{request.contextPath}/resources/images/login.png"
+                     width="30"
+                     height="30"
+                     alt="Iniciar sesion"/>
+                <span>Iniciar sesion</span>
+            </h:link>
 
-        <p:outputLabel for="correo" value="Correo electrónico"/>
-        <p:inputText id="correo"
-                     value="#{registroBean.usuario.correo}"
-                     required="true"/>
+        </div>
+    </div>
 
-        <br/><br/>
+    <div class="contenedor">
 
-        <p:outputLabel for="password" value="Contraseña"/>
-        <p:password id="password"
-                    value="#{registroBean.usuario.password}"
-                    required="true"
-                    feedback="false"/>
+        <div class="tarjeta">
 
-        <br/><br/>
+            <h:form id="registroForm">
 
-        <p:commandButton value="CREAR CUENTA"
-                         action="#{registroBean.registrar}"
-                         update="messages"
-                         process="@form"/>
+                <h2 class="titulo">CREAR CUENTA</h2>
 
-        <br/><br/>
+                <p:messages id="messages"
+                            showDetail="true"
+                            closable="true"/>
 
-        <p:button value="Volver al login"
-                  outcome="/login.xhtml"/>
+                <div class="campo">
 
-    </h:form>
+                    <p:outputLabel for="nombre"
+                                   value="NOMBRE DE USUARIO"
+                                   styleClass="etiqueta"/>
+
+                    <p:inputText id="nombre"
+                                 value="#{registroBean.usuario.nombreUsuario}"
+                                 styleClass="entrada"
+                                 placeholder="Ingresa tu nombre"
+                                 required="true"
+                                 requiredMessage="El nombre de usuario es obligatorio"/>
+
+                </div>
+
+                <div class="campo">
+
+                    <p:outputLabel for="correo"
+                                   value="CORREO ELECTRONICO"
+                                   styleClass="etiqueta"/>
+
+                    <p:inputText id="correo"
+                                 value="#{registroBean.usuario.correo}"
+                                 styleClass="entrada"
+                                 placeholder="Ingresa tu correo"
+                                 required="true"
+                                 requiredMessage="El correo de es obligatorio"/>
+
+                </div>
+
+                <div class="campo">
+
+                    <p:outputLabel for="password"
+                                   value="CONTRASEÑA"
+                                   styleClass="etiqueta"/>
+
+                    <p:password id="password"
+                                value="#{registroBean.usuario.password}"
+                                styleClass="entrada"
+                                placeholder="Ingresa tu contraseña"
+                                required="true"
+                                feedback="false"
+                                requiredMessage="La contraseña es obligatorio"/>
+
+                </div>
+
+                <p:commandButton value="CREAR CUENTA"
+                                 action="#{registroBean.registrar}"
+                                 update="messages"
+                                 process="@form"
+                                 styleClass="boton"/>
+
+                <p:button value="VOLVER AL LOGIN"
+                          outcome="/login.xhtml"
+                          styleClass="volver"/>
+
+            </h:form>
+
+        </div>
+
+    </div>
 
 </h:body>
 </html>
+
