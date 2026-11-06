@@ -3,250 +3,63 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
-    <h:head>
-        <title>Iniciar Sesion - Vinilos</title>
-        <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
+<h:head>
+    <title>Iniciar sesión - Vinilos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
 
-        <style>
-            * {
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
-            }
+<h:body>
 
-            body {
-                margin: 0;
-                font-family: Arial, sans-serif;
-                background-color: #f8eeee;!important;
-                color: #f8eeee;
-            }
+    <div class="acceso-pagina">
+    <div class="acceso-contenido">
+    <div class="login-container">
 
-            /* Barra superior */
-            .barra {
-                background-color: #ffffff;
-                height: 70px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0 38px;
-                box-shadow: 0 2px 5px rgba(81, 71, 71, 0.15);
-                border-bottom: 1px solid #eadede;
-            }
-
-            .nombre {
-                color: #6B4636;
-                font-size: 20px;
-                font-weight: bold;
-                text-decoration: none;
-                letter-spacing: 0;
-            }
-
-            .opciones {
-                display: flex;
-                align-items: center;
-                gap: 25px;
-            }
-
-            .menu_btn {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                color: #76515e;
-                text-decoration: none;
-                font-size: 15px;
-                font-weight: bold;
-            }
-
-            .menu_btn:hover {
-                color: #c76b8a;
-            }
-
-            .menu_btn img {
-                object-fit: contain;
-            }
-
-            /* Formulario */
-            .login-container {
-                max-width: 450px;
-                margin: 65px auto;
-                padding: 35px;
-                background-color: #ffffff;
-                border: 1px solid #f2dce4;
-                border-radius: 18px;
-                box-shadow: 0 5px 20px rgba(199, 107, 138, 0.10);
-            }
-
-            .titulo-login {
-                color: #514747;
-                font-size: 28px;
-                font-weight: bold;
-                margin-bottom: 30px;
-                text-align: center;
-                letter-spacing: 1px;
-            }
-
-            .campo-label {
-                display: block;
-                font-size: 14px;
-                color: #76515e;
-                margin-bottom: 8px;
-                font-weight: bold;
-            }
-
-            .input-group {
-                margin-bottom: 22px;
-            }
-
-            .input-field {
-                width: 100%;
-                padding: 14px 18px;
-                font-size: 15px;
-                border: 1px solid #ead5dd;
-                border-radius: 25px;
-                background-color: #fff8fa;
-                color: #514747;
-                outline: none;
-            }
-
-            .input-field::placeholder {
-                color: #b69da6;
-            }
-
-            .input-field:focus {
-                border-color: #d58aa3;
-                background-color: #ffffff;
-            }
-
-            .texto-ayuda {
-                font-size: 13px;
-                color: #987783;
-                margin-bottom: 22px;
-            }
+        <h:form id="loginForm">
 
 
-            .btn-iniciar {
-                width: 100%;
-                background-color: #d58aa3 !important;
-                color: #ffffff !important;
-                border: none !important;
-                border-radius: 25px !important;
-                padding: 14px 0 !important;
-                font-size: 15px !important;
-                font-weight: bold !important;
-                cursor: pointer;
-            }
+            <p:messages id="messages" showDetail="true" closable="true"/>
 
-            .btn-iniciar:hover {
-                background-color: #c76b8a !important;
-            }
+            <h1 class="titulo-login">Iniciar sesión</h1>
 
-            /* Botón crear cuenta */
-            .btn-registro {
-                display: block !important;
-                width: 100%;
-                margin-top: 14px;
-                background-color: #ffffff !important;
-                color: #c76b8a !important;
-                border: 1px solid #d58aa3 !important;
-                border-radius: 25px !important;
-                padding: 13px 0 !important;
-                font-size: 15px !important;
-                font-weight: bold !important;
-                text-align: center;
-                text-decoration: none !important;
-            }
-
-            .btn-registro:hover {
-                background-color: #fff0f5 !important;
-            }
-
-            .ui-messages {
-                margin-bottom: 20px;
-            }
-
-
-        </style>
-    </h:head>
-
-    <h:body>
-
-
-        <div class="barra">
-
-            <h:link outcome="/index.xhtml"
-                    styleClass="nombre">
-                VINILO
-            </h:link>
-
-            <div class="opciones">
-
-                <h:link outcome="/carrito.xhtml"
-                        styleClass="menu_btn">
-                    <img src="#{request.contextPath}/resources/images/carrito.png"
-                         width="30"
-                         height="30"
-                         alt="Carrito"/>
-                </h:link>
-
-                <h:link outcome="/login.xhtml"
-                        styleClass="menu_btn">
-                    <img src="#{request.contextPath}/resources/images/login.png"
-                         width="30"
-                         height="30"
-                         alt="Iniciar sesion"/>
-                    <span>Iniciar sesion</span>
-                </h:link>
-
+            <div class="input-group">
+                <label class="campo-label" for="loginForm:correo">Correo electrónico</label>
+                <p:inputText id="correo"
+                             styleClass="input-field"
+                             placeholder="Ingresa tu correo"
+                             autocomplete="off"
+                             value="#{loginUI.usuario.correo}"/>
             </div>
-        </div>
 
+            <div class="input-group">
+                <label class="campo-label" for="loginForm:password">Contraseña</label>
+                <p:password id="password"
+                            styleClass="input-field"
+                            placeholder="Ingresa tu contraseña"
+                            value="#{loginUI.usuario.password}"/>
+            </div>
 
-        <div class="login-container">
+            <div class="texto-ayuda">
+                Los datos de acceso distinguen mayúsculas y minúsculas.
+            </div>
 
-            <h:form id="loginForm">
+            <h:commandButton value="Iniciar sesión"
+                             action="#{loginUI.login()}"
+                             styleClass="btn-iniciar"/>
 
-                <p:messages id="messages" showDetail="true" closable="true"/>
+            <h:button value="Crear cuenta"
+                      outcome="/registro.xhtml"
+                      styleClass="btn-registro"/>
 
-                <h1 class="titulo-login">INICIAR SESION</h1>
+        </h:form>
 
-                <div class="input-group">
-                    <label class="campo-label" for="correo">CORREO ELECTRONICO</label>
-                    <p:inputText id="correo"
-                                 styleClass="input-field"
-                                 placeholder="Ingresa tu correo:"
-                                 autocomplete="off"
-                                 value="#{loginUI.usuario.correo}" />
-                </div>
+    </div>
+    <h:link outcome="/index.xhtml" styleClass="volver-catalogo">← Volver al catálogo</h:link>
+    </div>
+    </div>
 
-                <div class="input-group">
-                    <label class="campo-label" for="password">CONTRASEÑA</label>
-                    <p:password id="password"
-                                styleClass="input-field"
-                                placeholder="Ingresa tu contraseña:"
-                                value="#{loginUI.usuario.password}" />
-                </div>
-
-                <div class="texto-ayuda">
-                    Los datos de acceso son sensibles a mayusculas y minusculas
-                </div>
-
-
-
-                <p:commandButton value="INICIAR SESIÓN"
-                                 styleClass="btn-iniciar"
-                                 action="#{loginUI.login()}"
-                                 update="messages"
-                                 process="@form"/>
-
-                <p:button value="CREAR CUENTA"
-                          outcome="/registro.xhtml"
-                          styleClass="btn-registro"/>
-
-            </h:form>
-
-        </div>
-
-    </h:body>
+</h:body>
 </html>

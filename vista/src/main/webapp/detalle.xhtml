@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Detalle del vinilo - VINILO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+
+<h:body>
+
+    <ui:include src="/barra.xhtml"/>
+
+    <div class="contenedor-detalle">
+
+        <div class="detalle-imagen">
+            <h:graphicImage value="/resources/images/#{viniloBean.viniloSeleccionado.imagen}"
+                            styleClass="portada-grande"
+                            alt="Portada del vinilo"/>
+        </div>
+
+        <div class="detalle-datos">
+
+            <h1 class="titulo-detalle">
+                <h:outputText value="#{viniloBean.viniloSeleccionado.nombre}"/>
+            </h1>
+
+            <div class="artista-detalle">
+                <h:outputText value="#{viniloBean.viniloSeleccionado.artista}"/>
+            </div>
+
+            <div class="genero-detalle">
+                <h:outputText value="#{viniloBean.viniloSeleccionado.genero}"/>
+            </div>
+
+            <div class="precio-detalle">
+                <h:outputText value="#{viniloBean.viniloSeleccionado.precio}">
+                    <f:convertNumber type="currency" currencySymbol="$" locale="es_MX"/>
+                </h:outputText>
+            </div>
+
+            <div class="existencias-detalle">
+                Disponibles:
+                <h:outputText value="#{viniloBean.viniloSeleccionado.cantidad}"/>
+            </div>
+
+            <div class="descripcion-detalle">
+                <h:outputText value="#{viniloBean.viniloSeleccionado.descripcion}"/>
+            </div>
+
+            <h:form id="formDetalle">
+
+                <p:growl id="msgs" showDetail="true" life="4000"/>
+
+                <h:commandButton value="Agregar al carrito"
+                                 action="#{carritoBean.agregar(viniloBean.viniloSeleccionado)}"
+                                 styleClass="boton-detalle">
+                    <p:ajax process="@this" update="msgs"/>
+                </h:commandButton>
+
+                <h:link outcome="/index.xhtml" styleClass="seguir-detalle">
+                    Volver al catálogo
+                </h:link>
+
+            </h:form>
+
+        </div>
+
+    </div>
+
+    <div class="resenas">
+
+        <div class="resenas-tarjeta">
+
+            <h3 class="resenas-titulo">Reseñas</h3>
+
+            <div class="resena">
+                <div class="resena-estrellas">★★★★★</div>
+                <div class="resena-nombre">María Fernanda G.</div>
+                <div class="resena-texto">
+                    El vinilo llegó en perfectas condiciones y el sonido es increíble. Lo recomiendo a cualquier amante del disco.
+                </div>
+            </div>
+
+            <div class="resena">
+                <div class="resena-estrellas">★★★★★</div>
+                <div class="resena-nombre">Carlos R.</div>
+                <div class="resena-texto">
+                    Muy buena compra, la portada es hermosa y el vinilo se siente como nuevo. Precioso detalle.
+                </div>
+            </div>
+
+            <div class="resena">
+                <div class="resena-estrellas">★★★★★</div>
+                <div class="resena-nombre">Sofía M.</div>
+                <div class="resena-texto">
+                    Reproducción excelente, llega rápido y en perfecto estado. Sin duda volvería a comprar.
+                </div>
+            </div>
+
+            <div class="resena">
+                <div class="resena-estrellas">★★★★★</div>
+                <div class="resena-nombre">Jorge L.</div>
+                <div class="resena-texto">
+                    Un clásico que se disfruta mucho. La calidad de la prensa es excelente y el precio muy justo.
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="pie-contacto">
+        <span>vinilstore@gmail.com</span>
+        <span>+52 55 1234 5678</span>
+    </div>
+
+</h:body>
+
+</html>

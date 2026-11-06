@@ -1,0 +1,413 @@
+/* ==========================================================
+   VINILO - panel de administración (tema rosa suave)
+   Ruta: src/main/webapp/resources/css/admin.css
+   Requiere cargar antes style.css (variables de color).
+   ========================================================== */
+
+/* ---------- Menú lateral ---------- */
+
+.menu_lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 230px;
+    padding: 24px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: var(--barra);
+    border-right: 1px solid var(--barra-borde);
+    box-shadow: 2px 0 10px rgba(201, 80, 124, 0.12);
+    z-index: 100;
+}
+
+.logo_admin {
+    display: block;
+    margin-bottom: 4px;
+    font-family: var(--logo);
+    font-size: 30px;
+    font-weight: normal;
+    color: var(--cafe);
+    text-decoration: none;
+}
+
+.menu_sub {
+    margin-bottom: 14px;
+    font-size: 13px;
+    color: #8b5a6b;
+}
+
+.menu_opciones {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu_pie {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu_pie form { margin: 0; }
+
+.menu_lateral .menu_btn {
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: var(--cafe);
+    background-color: rgba(255, 255, 255, 0.65);
+    border: 1px solid var(--barra-borde);
+    border-radius: 22px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.menu_lateral .menu_btn:hover {
+    color: var(--rosa-osc);
+    background-color: #ffffff;
+}
+
+.menu_lateral .menu_btn-activo,
+.menu_lateral .menu_btn-activo:hover {
+    color: #ffffff;
+    background-color: var(--rosa);
+    border-color: var(--rosa);
+}
+
+.menu_lateral .cerrar_sesion {
+    color: var(--rosa-osc);
+    background-color: transparent;
+    border-color: var(--rosa);
+}
+
+.menu_lateral .cerrar_sesion:hover {
+    color: #ffffff;
+    background-color: var(--rosa);
+}
+
+/* ---------- Contenido ---------- */
+
+.contenido {
+    margin-left: 230px;
+    padding: 28px 32px 40px;
+}
+
+.titulo-pagina {
+    margin: 0 0 20px;
+    font-family: var(--serif);
+    font-size: 30px;
+    color: var(--titulo);
+}
+
+.subtitulo-pagina {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--titulo);
+}
+
+.panel {
+    max-width: 1100px;
+    margin-top: 16px;
+    padding: 24px;
+    background-color: #ffffff;
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    box-shadow: var(--sombra);
+}
+
+.panel h2 {
+    margin: 0 0 16px;
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--titulo);
+}
+
+.barra-tabla {
+    max-width: 1100px;
+    margin: 34px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.barra-tabla form { margin: 0; }
+
+.buscador-admin {
+    width: 280px;
+    max-width: 100%;
+    padding: 10px 18px !important;
+    font-size: 14px;
+    background-color: #ffffff;
+    border: 1px solid #e9c3d0 !important;
+    border-radius: 25px !important;
+    outline: none;
+}
+
+/* ---------- Formularios ---------- */
+
+.campos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 22px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.labels {
+    font-size: 14px;
+    font-weight: bold;
+    color: #76515e;
+}
+
+.campo .ui-inputfield,
+.campo .ui-inputnumber input {
+    padding: 10px 16px;
+    font-size: 14px;
+    color: var(--texto);
+    background-color: #fffafc;
+    border: 1px solid #e9c3d0;
+    border-radius: 20px;
+}
+
+.campo .ui-inputfield:focus {
+    border-color: var(--rosa);
+    box-shadow: 0 0 0 3px rgba(221, 111, 150, 0.2);
+}
+
+.campo .ui-selectonemenu {
+    border: 1px solid #e9c3d0;
+    border-radius: 20px;
+    background-color: #fffafc;
+}
+
+.botones {
+    margin-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.botones form { margin: 0; }
+
+/* ---------- Botones del panel (h:commandButton) ---------- */
+
+.btn-admin,
+.btn-sec,
+.btn-peligro {
+    padding: 11px 28px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-admin {
+    color: #ffffff;
+    background-color: var(--rosa);
+    border: 1px solid var(--rosa);
+}
+
+.btn-admin:hover:not(:disabled) {
+    background-color: var(--rosa-osc);
+    border-color: var(--rosa-osc);
+}
+
+.btn-sec {
+    color: var(--rosa-osc);
+    background-color: #ffffff;
+    border: 1px solid var(--rosa);
+}
+
+.btn-sec:hover:not(:disabled) { background-color: var(--rosa-claro); }
+
+.btn-peligro {
+    color: #c0405a;
+    background-color: #ffffff;
+    border: 1px solid #d9546b;
+}
+
+.btn-peligro:hover:not(:disabled) {
+    color: #ffffff;
+    background-color: #d9546b;
+}
+
+.btn-admin:disabled,
+.btn-sec:disabled,
+.btn-peligro:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* ---------- Tablas (PrimeFaces) ---------- */
+
+.panel .ui-datatable thead th {
+    color: var(--cafe) !important;
+    background: var(--barra) !important;
+    border-color: var(--barra-borde) !important;
+}
+
+.panel .ui-datatable tbody tr:hover { background-color: var(--rosa-claro); }
+
+.panel .ui-datatable tbody tr.ui-state-highlight,
+.panel .ui-datatable tbody tr.ui-state-highlight td {
+    color: var(--texto) !important;
+    background: #fbd5e1 !important;
+}
+
+.miniatura {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    background-color: #fdf7f9;
+    border-radius: 6px;
+}
+
+/* ---------- Stock ---------- */
+
+.stock-grid {
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 18px;
+}
+
+.stock-card {
+    position: relative;
+    padding: 16px 12px 14px;
+    text-align: center;
+    background-color: #ffffff;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+}
+
+.stock-card.sin-stock {
+    background-color: #fff4f6;
+    border-color: #f1a3b3;
+}
+
+.sello-sin-stock {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 3px 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #d9546b;
+    border-radius: 12px;
+}
+
+.stock-imagen {
+    display: block;
+    width: 100px;
+    height: 100px;
+    margin: 18px auto 8px;
+    object-fit: contain;
+    background-color: #fdf7f9;
+    border-radius: 8px;
+}
+
+.stock-nombre {
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--titulo);
+}
+
+.stock-control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.stock-input {
+    min-width: 24px;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--cafe);
+}
+
+.stock-btn {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1;
+    color: #ffffff;
+    background-color: var(--rosa);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.stock-btn:hover:not(:disabled) { background-color: var(--rosa-osc); }
+.stock-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.stock-cantidad {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #7a6a70;
+}
+
+/* ---------- Estado vacío (tickets) ---------- */
+
+.vacio {
+    padding: 36px 10px;
+    text-align: center;
+    color: #76515e;
+}
+
+.vacio strong {
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--titulo);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 820px) {
+    .menu_lateral {
+        position: static;
+        width: 100%;
+        padding: 16px;
+        flex-direction: column;
+        box-shadow: none;
+    }
+    .menu_opciones { flex-direction: row; flex-wrap: wrap; }
+    .menu_lateral .menu_btn { width: auto; flex: 1 1 140px; }
+    .menu_pie { margin-top: 10px; flex-direction: row; flex-wrap: wrap; }
+    .menu_pie form { flex: 1 1 140px; }
+    .contenido { margin-left: 0; padding: 20px 16px 32px; }
+    .panel { padding: 16px; }
+    .panel .ui-datatable .ui-datatable-tablewrapper { overflow-x: auto; }
+    .campo { width: 100%; }
+    .campo .ui-inputfield, .campo .ui-selectonemenu { width: 100%; }
+    .barra-tabla { flex-direction: column; align-items: stretch; }
+    .buscador-admin { width: 100%; }
+    .botones .btn-admin, .botones .btn-sec, .botones .btn-peligro { flex: 1 1 130px; }
+}

@@ -11,21 +11,19 @@ import mx.desarrollo.integration.ServiceFacadeLocator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Named("usuarioBean")
 @SessionScoped
 public class UsuarioBean implements Serializable {
 
-    private FacadeUsuario facade;
-
-    private List<Usuario> listaUsuarios;
-    private Usuario usuarioSeleccionado;
-    private String nuevoRol;
+    private transient FacadeUsuario facade;
+    private List<Usuario> listaUsuarios = new ArrayList<>();
+    private Map<Integer, String> rolesEditados = new HashMap<>();
 
     public UsuarioBean() {
-        this.facade = ServiceFacadeLocator.getInstanceFacadeUsuario();
-        this.listaUsuarios = new ArrayList<Usuario>();
     }
 
     @PostConstruct
@@ -34,75 +32,72 @@ public class UsuarioBean implements Serializable {
     }
 
     private FacadeUsuario getFacade() {
-        if (this.facade == null) {
-            this.facade = ServiceFacadeLocator.getInstanceFacadeUsuario();
+        if (facade == null) {
+            facade = ServiceFacadeLocator.getInstanceFacadeUsuario();
         }
-        return this.facade;
+        return facade;
     }
 
     private void cargarLista() {
         FacadeUsuario f = getFacade();
-        if (f != null) {
-            this.listaUsuarios = f.obtenerUsuarios();
+        if (f == null) {
+            listaUsuarios = new ArrayList<>();
+        } else {
+            listaUsuarios = f.obtenerUsuarios();
         }
-        if (this.listaUsuarios == null) {
-            this.listaUsuarios = new ArrayList<Usuario>();
+        if (listaUsuarios == null) {
+            listaUsuarios = new ArrayList<>();
+        }
+        rolesEditados.clear();
+        for (Usuario usuario : listaUsuarios) {
+            rolesEditados.put(usuario.getIdUsuario(), usuario.getRol());
         }
     }
 
     public List<Usuario> getListaUsuarios() {
-        if (listaUsuarios == null || listaUsuarios.isEmpty()) {
-            cargarLista();
-        }
         return listaUsuarios;
     }
 
-    public void setListaUsuarios(List<Usuario> listaUsuarios) {
-        this.listaUsuarios = listaUsuarios;
+    public Map<Integer, String> getRolesEditados() {
+        return rolesEditados;
     }
 
-    public Usuario getUsuarioSeleccionado() {
-        return usuarioSeleccionado;
-    }
-
-    public void setUsuarioSeleccionado(Usuario usuarioSeleccionado) {
-        this.usuarioSeleccionado = usuarioSeleccionado;
-        if (usuarioSeleccionado != null) {
-            this.nuevoRol = usuarioSeleccionado.getRol();
+    public void guardarRoles() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        FacadeUsuario f = getFacade();
+        if (f == null) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error", "No se pudo acceder a la capa de negocio."));
+            return;
         }
-    }
 
-    public String getNuevoRol() {
-        return nuevoRol;
-    }
-
-    public void setNuevoRol(String nuevoRol) {
-        this.nuevoRol = nuevoRol;
-    }
-
-    public void cambiarRol() {
+        int cambios = 0;
         try {
-            if (usuarioSeleccionado == null) {
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención", "Selecciona un usuario de la tabla"));
-                return;
+            for (Usuario usuario : listaUsuarios) {
+                String rol = rolesEditados.get(usuario.getIdUsuario());
+                if (!"user".equals(rol) && !"admin".equals(rol)) {
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            "Error", "Hay un rol no válido para el usuario " + usuario.getIdUsuario()));
+                    return;
+                }
             }
-
-            FacadeUsuario f = getFacade();
-            if (f == null) {
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo inicializar la capa de negocio"));
-                return;
+            for (Usuario usuario : listaUsuarios) {
+                String rol = rolesEditados.get(usuario.getIdUsuario());
+                if (!rol.equals(usuario.getRol())) {
+                    f.actualizarRol(usuario.getIdUsuario(), rol);
+                    usuario.setRol(rol);
+                    cambios++;
+                }
             }
-
-            f.actualizarRol(usuarioSeleccionado.getIdUsuario(), nuevoRol);
-            cargarLista();
-
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Rol actualizado correctamente"));
+            String mensaje = "Se actualizaron " + cambios + " usuario(s).";
+            if (cambios == 0) {
+                mensaje = "No había cambios por guardar.";
+            }
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Éxito", mensaje));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo cambiar el rol: " + e.getMessage()));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error", "No se pudieron guardar todos los cambios. Revisa los roles e inténtalo de nuevo."));
         }
     }
 }

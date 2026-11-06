@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:outputScript library="js" name="barra.js" target="head"/>
+
+    <header class="#{mostrarBuscador == false ? 'barra barra-sin-buscador' : 'barra'}">
+
+        <h:link outcome="/index.xhtml" styleClass="logo">VINILO</h:link>
+
+        <!-- El buscador se oculta si la página manda mostrarBuscador=false (login, checkout...) -->
+        <h:panelGroup layout="block" styleClass="barra-centro"
+                      rendered="#{mostrarBuscador != false}">
+
+            <h:form id="formBusqueda" styleClass="buscador-form">
+
+                <!-- Empieza cerrado: solo se abre al escribir (ver barra.js) -->
+                <div class="buscador-wrap busqueda-cerrada">
+
+                    <p:inputText id="buscador"
+                                 value="#{viniloBean.busquedaSugerencias}"
+                                 placeholder="Buscar productos..."
+                                 autocomplete="off"
+                                 onkeydown="if (event.keyCode === 13) { return false; }"
+                                 styleClass="buscador-input">
+                        <p:ajax event="keyup"
+                                delay="250"
+                                process="@this"
+                                update="panelResultados"
+                                oncomplete="window.mostrarResultadosVinilo &amp;&amp; window.mostrarResultadosVinilo()"/>
+                    </p:inputText>
+
+                    <h:panelGroup id="panelResultados" layout="block">
+
+                        <h:panelGroup layout="block"
+                                      styleClass="resultados"
+                                      rendered="#{viniloBean.hayBusquedaSugerencias()}">
+
+                            <ui:repeat value="#{viniloBean.buscarSugerencias()}" var="vinilo">
+                                <h:commandButton value="#{vinilo.nombre}"
+                                                 action="#{viniloBean.seleccionar(vinilo)}"
+                                                 styleClass="resultado"/>
+                            </ui:repeat>
+
+                            <h:panelGroup layout="block"
+                                          styleClass="resultado-vacio"
+                                          rendered="#{empty viniloBean.buscarSugerencias()}">
+                                No se encontraron vinilos
+                            </h:panelGroup>
+
+                        </h:panelGroup>
+
+                    </h:panelGroup>
+
+                </div>
+
+            </h:form>
+
+        </h:panelGroup>
+
+        <nav class="opciones">
+
+            <h:panelGroup rendered="#{loginUI.usuario.rol != null and loginUI.usuario.rol.trim().toLowerCase().startsWith('admin')}">
+                <h:link outcome="/vinilos.xhtml" styleClass="menu_btn">
+                    ADMIN
+                </h:link>
+            </h:panelGroup>
+
+            <h:link outcome="/carrito.xhtml" styleClass="menu_btn">
+                <img src="#{request.contextPath}/resources/images/carrito.png"
+                     width="22" height="22" alt=""/>
+                <span>Carrito</span>
+            </h:link>
+
+            <h:panelGroup rendered="#{loginUI.usuario.idUsuario == null}">
+                <h:link outcome="/login.xhtml" styleClass="menu_btn btn-login">
+                    Iniciar sesión
+                </h:link>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block"
+                          styleClass="sesion-activa"
+                          rendered="#{loginUI.usuario.idUsuario != null}">
+
+                <span class="menu_bienvenida" title="Rol: #{loginUI.usuario.rol}">
+                    Hola, #{loginUI.usuario.nombreUsuario}
+                </span>
+
+                <h:form id="formSesion">
+                    <h:commandButton value="Cerrar sesión"
+                                     action="#{loginUI.cerrarSesion}"
+                                     styleClass="logout-btn"/>
+                </h:form>
+
+            </h:panelGroup>
+
+        </nav>
+
+    </header>
+
+</ui:composition>

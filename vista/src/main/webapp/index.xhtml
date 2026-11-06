@@ -5,241 +5,267 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
+
 <h:head>
-
-
     <title>Tienda de vinilos</title>
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0"/>
-
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f8eeee;
-            color: #514747;
-        }
-
-        .barra {
-            background-color: #ffffff;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 38px;
-            box-shadow: 0 2px 5px rgba(81, 71, 71, 0.15);
-            border-bottom: 1px solid #eadede;
-        }
-
-        .nombre {
-            color: #6B4636;
-            font-size: 20px;
-            font-weight: bold;
-            text-decoration: none;
-            letter-spacing: 0;
-        }
-
-        .opciones {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .opciones a {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-            color: #6B4636;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .catalogo {
-            max-width: 1050px;
-            margin: 15px auto;
-            padding: 15px;
-            background-color: white;
-
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 15px;
-        }
-
-        .vinilo {
-            padding: 12px;
-            border-right: 1px solid #eeeeee;
-            border-bottom: 1px solid #eeeeee;
-            background-color: white;
-            min-width: 0;
-        }
-
-        .portada {
-            width: 100%;
-            height: 190px;
-            object-fit: contain;
-            background-color: #fafafa;
-        }
-
-        .titulo {
-            color: #d84c58;
-            font-size: 15px;
-            margin: 12px 0 5px;
-        }
-
-        .artista {
-            font-size: 13px;
-            color: #777777;
-        }
-
-        .precio {
-            color: #d84c58;
-            font-weight: bold;
-            margin: 12px 0;
-        }
-
-        .existencias {
-            color: #6ab85a;
-            font-size: 12px;
-        }
-
-        .cantidad {
-            width: 60px;
-            padding: 6px;
-            margin: 8px 0;
-        }
-
-        .boton {
-            width: 100%;
-            background-color: #d58aa3 !important;
-            color: #ffffff !important;
-            border: none !important;
-            border-radius: 25px !important;
-            padding: 14px 0 !important;
-            font-size: 15px !important;
-            font-weight: bold !important;
-            cursor: pointer;
-        }
-
-        .boton:hover {
-            background-color: #c76b8a !important;
-        }
-
-
-        .inferior {
-            margin-top: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        @media (max-width: 650px) {
-            .catalogo {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 420px) {
-            .catalogo {
-                grid-template-columns: 1fr;
-            }
-
-            .barra {
-                padding: 0 12px;
-            }
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet library="css" name="style.css"/>
 </h:head>
 
 <h:body>
 
-    <div class="barra">
+    <ui:include src="/barra.xhtml"/>
 
-        <h:link outcome="/index.xhtml"
-                styleClass="nombre">
-            VINILO
-        </h:link>
+    <!-- Carrusel de anuncios.
+         Imágenes: resources/images/carrusel1, carrusel2 y carrusel3
+         (.jpg, .png o .webp; se usa la que exista). Se recortan solas
+         para llenar el anuncio sin deformarse. -->
+    <section class="carrusel" id="carrusel" aria-label="Anuncios">
 
-        <div class="opciones">
+        <div class="carrusel-pista">
 
-            <h:link outcome="/carrito.xhtml" styleClass="menu_btn">
-                <img src="#{request.contextPath}/resources/images/carrito.png"
-                     width="30" height="30" alt="Carrito"/>
-                <span style="font-size: 16px; font-weight: bold;"></span>
-            </h:link>
+            <div class="slide slide-1"
+                 style="background-image: linear-gradient(90deg, rgba(60,40,28,0.78) 0%, rgba(60,40,28,0.35) 55%, rgba(60,40,28,0.05) 100%), url('#{request.contextPath}/resources/images/carrusel1.jpg'), url('#{request.contextPath}/resources/images/carrusel1.png'), url('#{request.contextPath}/resources/images/carrusel1.webp');">
+                <div class="slide-texto">
+                    <span class="slide-etiqueta">Nuevos ingresos</span>
+                    <h2>La música se siente diferente</h2>
+                    <p>Descubre tus álbumes favoritos y disfruta cada canción en vinilo.</p>
+                    <a class="slide-btn" href="#catalogo">Ver catálogo</a>
+                </div>
+            </div>
 
-            <h:link outcome="/login.xhtml" styleClass="menu_btn">
-                <img src="#{request.contextPath}/resources/images/login.png"
-                     width="30" height="30" alt="Iniciar sesión"/>
-                <span style="font-size: 16px; font-weight: bold;">Iniciar sesión</span>
-            </h:link>
+            <div class="slide slide-2"
+                 style="background-image: linear-gradient(90deg, rgba(60,40,28,0.78) 0%, rgba(60,40,28,0.35) 55%, rgba(60,40,28,0.05) 100%), url('#{request.contextPath}/resources/images/carrusel2.jpg'), url('#{request.contextPath}/resources/images/carrusel2.png'), url('#{request.contextPath}/resources/images/carrusel2.webp');">
+                <div class="slide-texto">
+                    <span class="slide-etiqueta">Temporada de rock</span>
+                    <h2>Cada disco cuenta una historia.</h2>
+                    <p>Encuentra ese álbum especial que merece un lugar en tu colección.</p>
+                    <a class="slide-btn" href="#catalogo">Explorar géneros</a>
+                </div>
+            </div>
+
+            <div class="slide slide-3"
+                 style="background-image: linear-gradient(90deg, rgba(60,40,28,0.78) 0%, rgba(60,40,28,0.35) 55%, rgba(60,40,28,0.05) 100%), url('#{request.contextPath}/resources/images/carrusel3.jpg'), url('#{request.contextPath}/resources/images/carrusel3.png'), url('#{request.contextPath}/resources/images/carrusel3.webp');">
+                <div class="slide-texto">
+                    <span class="slide-etiqueta">Jazz y electrónica</span>
+                    <h2>Baja el ritmo. Sube la música.</h2>
+                    <p>A veces, todo lo que necesitas es tu disco favorito y un momento para ti.</p>
+                    <a class="slide-btn" href="#catalogo">Ver con stock</a>
+                </div>
+            </div>
 
         </div>
-    </div>
 
+        <button type="button" class="flecha flecha-izq" aria-label="Anuncio anterior">&#8249;</button>
+        <button type="button" class="flecha flecha-der" aria-label="Anuncio siguiente">&#8250;</button>
+        <div class="puntos"></div>
+
+    </section>
+
+    <h2 class="seccion-titulo" id="catalogo">Catálogo</h2>
 
     <h:form id="formCatalogo">
 
+        <p:growl id="msgs" showDetail="true" life="4000"/>
 
+        <div class="contenedor-resultados">
 
+            <!-- Filtros -->
+            <aside class="filtros">
 
-        <div class="catalogo">
+                <span class="filtro-titulo">Género</span>
 
+                <div class="filtros-botones">
 
-            <ui:repeat value="#{viniloBean.listaVinilos}"
-                       var="vinilo">
+                    <h:commandButton value="Todos"
+                                     action="#{viniloBean.filtrarTodos}"
+                                     styleClass="#{empty viniloBean.filtroGenero ? 'filtro-btn-activo' : 'filtro-btn'}">
+                        <p:ajax process="@this" update="@form"/>
+                    </h:commandButton>
 
-                <div class="vinilo">
+                    <h:commandButton value="Rock"
+                                     action="#{viniloBean.filtrarRock}"
+                                     styleClass="#{viniloBean.filtroGenero eq 'Rock' ? 'filtro-btn-activo' : 'filtro-btn'}">
+                        <p:ajax process="@this" update="@form"/>
+                    </h:commandButton>
 
-                    <h:graphicImage
+                    <h:commandButton value="Pop"
+                                     action="#{viniloBean.filtrarPop}"
+                                     styleClass="#{viniloBean.filtroGenero eq 'Pop' ? 'filtro-btn-activo' : 'filtro-btn'}">
+                        <p:ajax process="@this" update="@form"/>
+                    </h:commandButton>
 
-                            value="/resources/images/#{vinilo.imagen}"
-                            styleClass="portada"
-                            alt="Portada del vinilo"/>
+                    <h:commandButton value="Jazz"
+                                     action="#{viniloBean.filtrarJazz}"
+                                     styleClass="#{viniloBean.filtroGenero eq 'Jazz' ? 'filtro-btn-activo' : 'filtro-btn'}">
+                        <p:ajax process="@this" update="@form"/>
+                    </h:commandButton>
 
-
-                    <div class="titulo">
-                        <h:outputText value="#{vinilo.nombre}"/>
-                    </div>
-
-                    <div class="artista">
-                        <h:outputText value="#{vinilo.artista}"/>
-                    </div>
-
-                    <div class="precio">
-                        <h:outputText value="#{vinilo.precio}">
-                            <f:convertNumber type="currency"
-                                             currencySymbol="$"
-                                             locale="es_MX"/>
-                        </h:outputText>
-                    </div>
-
-                    <div class="existencias">
-                        Disponibles:
-                        <h:outputText value="#{vinilo.cantidad}"/>
-                    </div>
-
-                    <div class="inferior">
-
-                        <p:commandButton
-                                value="Agregar al carrito"
-                                action="#{carritoBean.agregar(vinilo)}"
-                                styleClass="boton"
-                                process="@this"
-                                update="@form"/>
-
-                    </div>
+                    <h:commandButton value="Electrónica"
+                                     action="#{viniloBean.filtrarElectronica}"
+                                     styleClass="#{viniloBean.filtroGenero eq 'Electrónica' ? 'filtro-btn-activo' : 'filtro-btn'}">
+                        <p:ajax process="@this" update="@form"/>
+                    </h:commandButton>
 
                 </div>
 
-            </ui:repeat>
+                <span class="filtro-titulo">Stock</span>
+
+                <div class="filtros-botones">
+
+                    <h:commandButton value="Con stock"
+                                     action="#{viniloBean.filtrarStockDisponibles}"
+                                     styleClass="#{viniloBean.filtroStock eq 'disponibles' ? 'filtro-btn-activo' : 'filtro-btn'}">
+                        <p:ajax process="@this" update="@form"/>
+                    </h:commandButton>
+
+                    <h:commandButton value="Agotados"
+                                     action="#{viniloBean.filtrarStockAgotados}"
+                                     styleClass="#{viniloBean.filtroStock eq 'agotados' ? 'filtro-btn-activo' : 'filtro-btn'}">
+                        <p:ajax process="@this" update="@form"/>
+                    </h:commandButton>
+
+                </div>
+
+                <span class="filtro-titulo">Orden</span>
+
+                <div class="filtros-botones">
+
+                    <h:commandButton value="A-Z"
+                                     action="#{viniloBean.ordenarAZ}"
+                                     styleClass="#{viniloBean.orden eq 'az' ? 'filtro-btn-activo' : 'filtro-btn'}">
+                        <p:ajax process="@this" update="@form"/>
+                    </h:commandButton>
+
+                    <h:commandButton value="Precio: menor a mayor"
+                                     action="#{viniloBean.ordenarPrecioMenor}"
+                                     styleClass="#{viniloBean.orden eq 'menor' ? 'filtro-btn-activo' : 'filtro-btn'}">
+                        <p:ajax process="@this" update="@form"/>
+                    </h:commandButton>
+
+                    <h:commandButton value="Precio: mayor a menor"
+                                     action="#{viniloBean.ordenarPrecioMayor}"
+                                     styleClass="#{viniloBean.orden eq 'mayor' ? 'filtro-btn-activo' : 'filtro-btn'}">
+                        <p:ajax process="@this" update="@form"/>
+                    </h:commandButton>
+
+                </div>
+
+                <h:commandButton value="Quitar filtros"
+                                 action="#{viniloBean.quitarFiltros}"
+                                 rendered="#{viniloBean.hayFiltros()}"
+                                 styleClass="filtro-quitar">
+                    <p:ajax process="@this" update="@form"/>
+                </h:commandButton>
+
+            </aside>
+
+            <!-- Catálogo -->
+            <div class="catalogo">
+
+                <ui:repeat value="#{viniloBean.buscarVinilos()}" var="vinilo">
+
+                    <div class="vinilo">
+
+                        <img class="portada"
+                             src="#{vinilo.imagen.startsWith('http') ? vinilo.imagen : request.contextPath.concat('/resources/images/').concat(vinilo.imagen)}"
+                             alt="Portada del vinilo"/>
+
+                        <div class="titulo">
+                            <h:outputText value="#{vinilo.nombre}"/>
+                        </div>
+
+                        <div class="artista">
+                            <h:outputText value="#{vinilo.artista}"/>
+                        </div>
+
+                        <div class="precio">
+                            <h:outputText value="#{vinilo.precio}">
+                                <f:convertNumber type="currency"
+                                                 currencySymbol="$"
+                                                 locale="es_MX"/>
+                            </h:outputText>
+                        </div>
+
+                        <div class="#{vinilo.cantidad le 0 ? 'existencias existencias-agotado' : 'existencias'}">
+                            Disponibles:
+                            <h:outputText value="#{vinilo.cantidad}"/>
+                        </div>
+
+                        <div class="inferior">
+                            <h:commandButton value="Agregar al carrito"
+                                             action="#{carritoBean.agregar(vinilo)}"
+                                             disabled="#{vinilo.cantidad le 0}"
+                                             styleClass="boton">
+                                <p:ajax process="@this" update="@form"/>
+                            </h:commandButton>
+                        </div>
+
+                    </div>
+
+                </ui:repeat>
+
+                <h:panelGroup layout="block"
+                              styleClass="catalogo-vacio"
+                              rendered="#{empty viniloBean.buscarVinilos()}">
+                    No hay vinilos con esos filtros. Prueba con otro género o quita algún filtro.
+                </h:panelGroup>
+
+            </div>
 
         </div>
 
     </h:form>
 
-</h:body>
+    <div class="pie-contacto">
+        <span>vinilstore@gmail.com</span>
+        <span>+52 55 1234 5678</span>
+    </div>
 
+    <script type="text/javascript">
+        //<![CDATA[
+        (function () {
+            var c = document.getElementById('carrusel');
+            if (!c) { return; }
+
+            var pista = c.querySelector('.carrusel-pista');
+            var slides = c.querySelectorAll('.slide');
+            var puntos = c.querySelector('.puntos');
+            var actual = 0;
+            var timer = null;
+
+            function crearPunto(n) {
+                var b = document.createElement('button');
+                b.type = 'button';
+                b.setAttribute('aria-label', 'Ir al anuncio ' + (n + 1));
+                b.onclick = function () { ir(n); };
+                puntos.appendChild(b);
+            }
+
+            for (var k = 0; k < slides.length; k++) { crearPunto(k); }
+
+            function reiniciar() {
+                clearInterval(timer);
+                timer = setInterval(function () { ir(actual + 1); }, 5500);
+            }
+
+            function ir(n) {
+                actual = (n + slides.length) % slides.length;
+                pista.style.transform = 'translateX(-' + (actual * 100) + '%)';
+                for (var j = 0; j < puntos.children.length; j++) {
+                    puntos.children[j].className = (j === actual) ? 'activo' : '';
+                }
+                reiniciar();
+            }
+
+            c.querySelector('.flecha-izq').onclick = function () { ir(actual - 1); };
+            c.querySelector('.flecha-der').onclick = function () { ir(actual + 1); };
+
+            ir(0);
+        })();
+        //]]>
+    </script>
+
+</h:body>
 
 </html>

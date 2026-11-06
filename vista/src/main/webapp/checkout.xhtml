@@ -6,258 +6,83 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-
 <h:head>
-    <title>Checkout</title>
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0"/>
-
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f8eeee;
-            color: #514747;
-        }
-
-        .barra {
-            background-color: white;
-            padding: 18px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px #dddddd;
-        }
-
-        .barra a {
-            color: #514747;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .contenedor {
-            display: grid;
-            max-width: 850px;
-            margin: 30px auto;
-            gap: 30px;
-            grid-template-columns: 1fr 400px;
-        }
-
-        .columnaizq{
-
-        }
-
-        .columnader{
-            border-radius: 8px;
-            background-color: #d84c58;
-            padding: 20px;
-            color: white;
-        }
-
-        .columnasup{
-            border-radius: 8px;
-            background-color: white;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-
-        .columnainf{
-            border-radius: 8px;
-            background-color: white;
-            padding: 20px;
-        }
-
-        .primera_fila,
-        .segunda_fila,
-        .tercera_fila {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto auto;
-            grid-auto-flow: column;
-            gap: 6px 16px;
-            margin-bottom: 16px;
-        }
-
-        .primera_fila input,
-        .segunda_fila input,
-        .tercera_fila input {
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .fila_completa {
-            margin-bottom: 16px;
-        }
-
-        .fila_completa label {
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        .fila_completa input {
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        h3{
-            margin: 5px;
-            text-align: center;
-            color: #d84c58;
-        }
-
-        h2 {
-            margin-top: 0;
-            color: #d84c58;
-        }
-
-        .producto {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 15px 0;
-            border-bottom: 1px solid #eeeeee;
-        }
-
-        .portada {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            background-color: #fafafa;
-        }
-
-        .datos {
-            flex: 1;
-        }
-
-        .datos h3 {
-            margin: 0 0 8px;
-        }
-
-        .datos p {
-            margin: 5px 0;
-            font-size: 14px;
-        }
-
-        .cantidad {
-            width: 45px;
-            padding: 5px;
-        }
-
-        .resumen {
-            text-align: right;
-            margin-top: 20px;
-        }
-
-        .total {
-            font-size: 20px;
-            font-weight: bold;
-            color: #d84c58;
-        }
-
-        .boton {
-            display: inline-block;
-            background-color: #514747;
-            color: white;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .boton:hover {
-            background-color: #766363;
-        }
-
-        .seguir {
-            color: #514747;
-            text-decoration: none;
-            margin-right: 15px;
-        }
-
-        .titulo{
-            text-align: center;
-        }
-
-        @media (max-width: 500px) {
-            .contenedor {
-                margin: 15px;
-                padding: 15px;
-            }
-
-            .producto {
-                gap: 10px;
-            }
-
-            .portada {
-                width: 75px;
-                height: 75px;
-            }
-
-            .barra {
-                padding: 15px;
-            }
-        }
-    </style>
+    <title>Checkout - Vinilos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <h:outputStylesheet library="css" name="checkout.css"/>
 </h:head>
 
 <h:body>
 
-    <div class="barra">
-        <h:link outcome="/index.xhtml">
-            Tienda de vinilos
-        </h:link>
+    <ui:include src="/barra.xhtml">
+        <ui:param name="mostrarBuscador" value="false"/>
+    </ui:include>
 
-        <h:link outcome="/login.xhtml">
-            Iniciar sesión
-        </h:link>
-    </div>
+    <h1 class="checkout-titulo">Finalizar compra</h1>
 
     <h:form id="formCheckout">
-        <div class="contenedor">
-            <div class="columnaizq">
-                <div class="columnasup">
-                    <h3>Informacion general</h3>
-                    <div class="primera_fila">
-                        <p:outputLabel for="estado" value="Estado"/>
-                        <p:inputText id="estado"
-                                     value="#{checkoutBean.estado}"
-                                     required="true"
-                                     requiredMessage="Ingresa tu estado de la república"/>
-                        <p:outputLabel for="municipio" value="Municipio"/>
-                        <p:inputText id="municipio"
-                                     value="#{checkoutBean.municipio}"
-                                     required="true"
-                                     requiredMessage="Ingresa tu municipio"/>
+
+        <p:growl id="msgs" showDetail="true" life="6000"/>
+
+        <div class="checkout-grid">
+
+            <div class="checkout-col">
+
+                <!-- Dirección de envío -->
+                <div class="tarjeta">
+                    <h3>Dirección de envío</h3>
+
+                    <div class="fila-campos">
+                        <div class="campo-co">
+                            <p:outputLabel for="estado" value="Estado"/>
+                            <p:inputText id="estado"
+                                         value="#{checkoutBean.estado}"
+                                         required="true"
+                                         requiredMessage="Ingresa tu estado de la república"/>
+                        </div>
+                        <div class="campo-co">
+                            <p:outputLabel for="municipio" value="Municipio"/>
+                            <p:inputText id="municipio"
+                                         value="#{checkoutBean.municipio}"
+                                         required="true"
+                                         requiredMessage="Ingresa tu municipio"/>
+                        </div>
                     </div>
-                    <div class="segunda_fila">
-                        <p:outputLabel for="ciudad" value="Ciudad"/>
-                        <p:inputText id="ciudad"
-                                     value="#{checkoutBean.ciudad}"
-                                     required="true"
-                                     requiredMessage="Ingresa tu ciudad"/>
-                        <p:outputLabel for="calle" value="Calle"/>
-                        <p:inputText id="calle"
-                                     value="#{checkoutBean.calle}"
-                                     required="true"
-                                     requiredMessage="Ingresa tu calle"/>
+
+                    <div class="fila-campos">
+                        <div class="campo-co">
+                            <p:outputLabel for="ciudad" value="Ciudad"/>
+                            <p:inputText id="ciudad"
+                                         value="#{checkoutBean.ciudad}"
+                                         required="true"
+                                         requiredMessage="Ingresa tu ciudad"/>
+                        </div>
+                        <div class="campo-co">
+                            <p:outputLabel for="calle" value="Calle y número"/>
+                            <p:inputText id="calle"
+                                         value="#{checkoutBean.calle}"
+                                         required="true"
+                                         requiredMessage="Ingresa tu calle"/>
+                        </div>
                     </div>
                 </div>
 
-                <div class="columnainf">
+                <!-- Datos de pago -->
+                <div class="tarjeta">
                     <h3>Datos de pago</h3>
 
-                    <div class="fila_completa">
+                    <div class="fila-completa campo-co">
                         <p:outputLabel for="numeroTarjeta" value="Número de tarjeta"/>
                         <p:inputMask id="numeroTarjeta"
                                      value="#{checkoutBean.numeroTarjeta}"
                                      mask="9999 9999 9999 9999"
+                                     placeholder="0000 0000 0000 0000"
                                      required="true"
                                      requiredMessage="Ingresa el número de tarjeta"/>
                     </div>
 
-                    <div class="fila_completa">
+                    <div class="fila-completa campo-co">
                         <p:outputLabel for="titular" value="Nombre del titular"/>
                         <p:inputText id="titular"
                                      value="#{checkoutBean.titular}"
@@ -265,62 +90,163 @@
                                      requiredMessage="Ingresa el nombre del titular"/>
                     </div>
 
-                    <div class="tercera_fila">
-                        <p:outputLabel for="vencimiento" value="Vencimiento"/>
-                        <p:inputMask id="vencimiento"
-                                     value="#{checkoutBean.vencimiento}"
-                                     mask="99/99"
-                                     required="true"
-                                     requiredMessage="Ingresa el vencimiento"/>
-                        <p:outputLabel for="codigo" value="Código de seguridad"/>
-                        <p:password id="codigo"
-                                    value="#{checkoutBean.codigoSeguridad}"
-                                    maxlength="4"
-                                    required="true"
-                                    requiredMessage="Ingresa el código de seguridad"/>
+                    <div class="fila-campos">
+                        <div class="campo-co">
+                            <p:outputLabel for="vencimiento" value="Vencimiento"/>
+                            <p:inputMask id="vencimiento"
+                                         value="#{checkoutBean.vencimiento}"
+                                         mask="99/99"
+                                         placeholder="MM/AA"
+                                         required="true"
+                                         requiredMessage="Ingresa el vencimiento"/>
+                        </div>
+                        <div class="campo-co">
+                            <p:outputLabel for="codigo" value="Código de seguridad"/>
+                            <p:password id="codigo"
+                                        value="#{checkoutBean.codigoSeguridad}"
+                                        maxlength="4"
+                                        required="true"
+                                        requiredMessage="Ingresa el código de seguridad"/>
+                        </div>
                     </div>
-                    <div style="margin-top: 20px; text-align: center;">
-                        <p:messages id="mensajes" closable="true"/>
-                        <p:commandButton value="Pagar"
+
+                    <div class="acciones-pago">
+                        <p:commandButton value="Pagar y generar ticket"
                                          action="#{checkoutBean.pagar}"
                                          process="@form"
                                          update="@form"
                                          styleClass="boton"/>
+                        <h:link outcome="/index.xhtml" value="Seguir comprando" styleClass="seguir"/>
                     </div>
                 </div>
+
             </div>
 
-            <div class="columnader">
-                <h3 style="color: white">Resumen del pedido</h3>
+            <!-- Resumen -->
+            <aside class="resumen-pedido">
+                <h3>Resumen del pedido</h3>
 
-                <h:outputText value="Tu carrito está vacío" rendered="#{empty checkoutBean.detalles}"/>
+                <h:panelGroup rendered="#{empty checkoutBean.detalles}">
+                    <div class="carrito-vacio-co">Tu carrito está vacío</div>
+                </h:panelGroup>
 
                 <ui:repeat value="#{checkoutBean.detalles}" var="d">
-                    <p>
-                        #{d.vinilo.nombre} (#{d.cantidad} x
-                        <h:outputText value="#{d.vinilo.precio}">
-                            <f:convertNumber type="currency" currencySymbol="$"/>
-                        </h:outputText>)
-                    </p>
+                    <div class="linea-pedido">
+                        <span class="lp-nombre">#{d.vinilo.nombre} &#215; #{d.cantidad}</span>
+                        <span class="lp-importe">
+                            <h:outputText value="#{d.vinilo.precio * d.cantidad}">
+                                <f:convertNumber type="currency" currencySymbol="$"/>
+                            </h:outputText>
+                        </span>
+                    </div>
                 </ui:repeat>
 
-                <p>Subtotal:
+                <div class="linea-total">
+                    <span>Subtotal</span>
                     <h:outputText value="#{checkoutBean.subtotal}">
                         <f:convertNumber type="currency" currencySymbol="$"/>
                     </h:outputText>
-                </p>
-                <p>Envío:
+                </div>
+                <div class="linea-total">
+                    <span>Envío</span>
                     <h:outputText value="#{checkoutBean.envio}">
                         <f:convertNumber type="currency" currencySymbol="$"/>
                     </h:outputText>
-                </p>
-                <p><b>Total:
+                </div>
+                <div class="linea-total gran-total">
+                    <span>Total</span>
                     <h:outputText value="#{checkoutBean.total}">
                         <f:convertNumber type="currency" currencySymbol="$"/>
                     </h:outputText>
-                </b></p>
-            </div>
+                </div>
+            </aside>
+
         </div>
+
+        <!-- Ventana 1: pago exitoso -->
+        <h:panelGroup layout="block" styleClass="modal-fondo" rendered="#{checkoutBean.dialogoVisible}">
+            <div class="modal-caja">
+                <div class="modal-check">&#10003;</div>
+                <h3>&#161;Pago exitoso!</h3>
+                <p>Tu compra se procesó correctamente. Ya puedes ver tu ticket.</p>
+                <div class="modal-botones">
+                    <p:commandButton value="Ver ticket"
+                                     action="#{checkoutBean.verTicket}"
+                                     process="@this"
+                                     update="@form"
+                                     styleClass="boton"/>
+                    <p:commandButton value="Cerrar"
+                                     action="#{checkoutBean.cerrarDialogo}"
+                                     process="@this"
+                                     update="@form"
+                                     styleClass="boton-sec"/>
+                </div>
+            </div>
+        </h:panelGroup>
+
+        <!-- Ventana 2: ticket -->
+        <h:panelGroup layout="block" styleClass="modal-fondo" rendered="#{checkoutBean.dialogoTicketVisible}">
+            <div class="modal-caja modal-ticket">
+
+                <div class="ticket">
+                    <div class="ticket-logo">Vinilo</div>
+                    <div class="ticket-sub">Tienda de vinilos &#183; vinilstore@gmail.com</div>
+                    <p class="ticket-gracias">&#161;Gracias por tu compra!</p>
+
+                    <hr/>
+
+                    <div class="ticket-dato"><span>Folio</span><span>#{checkoutBean.ticketNumero}</span></div>
+                    <div class="ticket-dato"><span>Fecha</span><span>#{checkoutBean.ticketFecha}</span></div>
+                    <div class="ticket-dato"><span>Cliente</span><span>#{checkoutBean.ticketTitular}</span></div>
+                    <div class="ticket-dato"><span>Enviar a</span><span>#{checkoutBean.ticketDireccion}</span></div>
+                    <div class="ticket-dato"><span>Tarjeta</span><span>**** #{checkoutBean.ticketTarjeta}</span></div>
+
+                    <hr/>
+
+                    <ui:repeat value="#{checkoutBean.ticketDetalles}" var="t">
+                        <div class="ticket-linea">
+                            <span>#{t.cantidad} &#215; #{t.vinilo.nombre}</span>
+                            <span>
+                                <h:outputText value="#{t.vinilo.precio * t.cantidad}">
+                                    <f:convertNumber type="currency" currencySymbol="$"/>
+                                </h:outputText>
+                            </span>
+                        </div>
+                    </ui:repeat>
+
+                    <hr/>
+
+                    <div class="ticket-dato"><span>Subtotal</span>
+                        <span><h:outputText value="#{checkoutBean.ticketSubtotal}">
+                            <f:convertNumber type="currency" currencySymbol="$"/>
+                        </h:outputText></span>
+                    </div>
+                    <div class="ticket-dato"><span>Env&#237;o</span>
+                        <span><h:outputText value="#{checkoutBean.ticketEnvio}">
+                            <f:convertNumber type="currency" currencySymbol="$"/>
+                        </h:outputText></span>
+                    </div>
+                    <div class="ticket-total"><span>TOTAL</span>
+                        <span><h:outputText value="#{checkoutBean.ticketTotal}">
+                            <f:convertNumber type="currency" currencySymbol="$"/>
+                        </h:outputText></span>
+                    </div>
+
+                    <hr/>
+                    <div class="ticket-pie">Conserva este ticket como comprobante.</div>
+                </div>
+
+                <div class="modal-botones">
+                    <button type="button" class="boton" onclick="window.print()">Imprimir / PDF</button>
+                    <p:commandButton value="Cerrar"
+                                     action="#{checkoutBean.cerrarDialogo}"
+                                     process="@this"
+                                     update="@form"
+                                     styleClass="boton-sec"/>
+                </div>
+
+            </div>
+        </h:panelGroup>
 
     </h:form>
 

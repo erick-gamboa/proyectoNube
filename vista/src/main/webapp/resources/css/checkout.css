@@ -1,0 +1,333 @@
+/* ==========================================================
+   VINILO - checkout y ticket (tema rosa suave)
+   Ruta: src/main/webapp/resources/css/checkout.css
+   Requiere cargar antes style.css (variables de color).
+   ========================================================== */
+
+.checkout-titulo {
+    max-width: 1000px;
+    margin: 30px auto 0;
+    padding: 0 20px;
+    font-family: var(--serif);
+    font-size: 30px;
+    color: var(--titulo);
+}
+
+.checkout-grid {
+    max-width: 1000px;
+    margin: 16px auto 40px;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 24px;
+    align-items: start;
+}
+
+.checkout-col { display: flex; flex-direction: column; gap: 20px; }
+
+.tarjeta {
+    padding: 22px;
+    background-color: #ffffff;
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    box-shadow: var(--sombra);
+}
+
+.tarjeta h3 {
+    margin: 0 0 16px;
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--titulo);
+}
+
+.fila-campos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 16px;
+    margin-bottom: 14px;
+}
+
+.fila-completa { margin-bottom: 14px; }
+
+.campo-co {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.campo-co label {
+    font-size: 13px;
+    font-weight: bold;
+    color: #76515e;
+}
+
+.campo-co .ui-inputfield,
+.campo-co input {
+    width: 100%;
+    padding: 11px 16px;
+    font-size: 14px;
+    color: var(--texto);
+    background-color: #fffafc;
+    border: 1px solid #e9c3d0;
+    border-radius: 20px;
+}
+
+.campo-co .ui-inputfield:focus,
+.campo-co input:focus {
+    border-color: var(--rosa);
+    box-shadow: 0 0 0 3px rgba(221, 111, 150, 0.2);
+    outline: none;
+}
+
+.campo-co .ui-password { width: 100%; }
+
+.acciones-pago {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.acciones-pago .boton { width: 100%; }
+
+/* ---------- Resumen del pedido ---------- */
+
+.resumen-pedido {
+    position: sticky;
+    top: 90px;
+    padding: 22px;
+    background-color: #ffffff;
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    box-shadow: var(--sombra);
+}
+
+.resumen-pedido h3 {
+    margin: 0 0 14px;
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--titulo);
+}
+
+.linea-pedido {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 0;
+    font-size: 14px;
+    border-bottom: 1px solid #f3e4ea;
+}
+
+.linea-pedido .lp-nombre { flex: 1; min-width: 0; }
+.linea-pedido .lp-importe { font-weight: bold; color: var(--cafe); white-space: nowrap; }
+
+.linea-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    padding: 6px 0;
+    font-size: 14px;
+}
+
+.linea-total.gran-total {
+    margin-top: 10px;
+    padding-top: 12px;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--titulo);
+    border-top: 2px dashed var(--borde);
+}
+
+.carrito-vacio-co { padding: 10px 0; font-size: 14px; color: #987783; }
+
+/* ---------- Ticket ---------- */
+
+.ticket-pagina {
+    max-width: 420px;
+    margin: 36px auto 50px;
+    padding: 0 16px;
+}
+
+.ticket {
+    padding: 28px 24px;
+    background-color: #ffffff;
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+    box-shadow: var(--sombra);
+    font-family: "Courier New", Courier, monospace;
+    color: var(--texto);
+}
+
+.ticket-logo {
+    text-align: center;
+    font-family: var(--logo);
+    font-size: 30px;
+    color: var(--cafe);
+}
+
+.ticket-sub {
+    margin: 2px 0 14px;
+    text-align: center;
+    font-size: 12px;
+    color: #987783;
+}
+
+.ticket-gracias {
+    margin: 0 0 14px;
+    text-align: center;
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--titulo);
+}
+
+.ticket hr {
+    margin: 12px 0;
+    border: none;
+    border-top: 2px dashed var(--borde);
+}
+
+.ticket-dato {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 4px 0;
+    font-size: 13px;
+}
+
+.ticket-dato span:last-child { text-align: right; font-weight: bold; }
+
+.ticket-linea {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 6px 0;
+    font-size: 13px;
+}
+
+.ticket-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--titulo);
+}
+
+.ticket-pie {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 12px;
+    color: #987783;
+}
+
+/* ---------- Ventanas (pago exitoso y ticket) ---------- */
+
+.modal-fondo {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    background-color: rgba(74, 59, 64, 0.55);
+}
+
+.modal-caja {
+    width: 100%;
+    max-width: 380px;
+    margin: auto;
+    padding: 28px 24px;
+    text-align: center;
+    background-color: #ffffff;
+    border: 1px solid var(--borde);
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(201, 80, 124, 0.3);
+}
+
+.modal-caja.modal-ticket {
+    max-width: 440px;
+    padding: 18px;
+    background-color: var(--fondo);
+}
+
+.modal-caja h3 {
+    margin: 10px 0 6px;
+    font-family: var(--serif);
+    font-size: 24px;
+    color: var(--titulo);
+}
+
+.modal-caja p { margin: 0 0 18px; font-size: 14px; color: #76515e; }
+
+.modal-check {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    font-size: 32px;
+    line-height: 60px;
+    color: #ffffff;
+    background-color: var(--rosa);
+    border-radius: 50%;
+}
+
+.modal-botones {
+    margin-top: 16px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.modal-botones .boton,
+.modal-botones .boton-sec {
+    flex: 1 1 130px;
+    width: auto;
+    padding: 12px 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.modal-botones .boton {
+    color: #ffffff;
+    background-color: var(--rosa);
+    border: 1px solid var(--rosa);
+}
+
+.modal-botones .boton:hover { background-color: var(--rosa-osc); }
+
+.boton-sec {
+    color: var(--rosa-osc);
+    background-color: #ffffff;
+    border: 1px solid var(--rosa);
+}
+
+.boton-sec:hover { background-color: var(--rosa-claro); }
+
+.ticket { text-align: left; }
+
+/* Al imprimir solo sale el ticket */
+@media print {
+    body * { visibility: hidden; }
+    .modal-ticket .ticket, .modal-ticket .ticket * { visibility: visible; }
+    .modal-fondo { position: static; background: #ffffff; padding: 0; }
+    .modal-caja.modal-ticket { box-shadow: none; border: none; padding: 0; background: #ffffff; }
+    .modal-ticket .ticket { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; border: none; }
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 820px) {
+    .checkout-grid { grid-template-columns: 1fr; }
+    .resumen-pedido { position: static; order: -1; }
+}
+
+@media (max-width: 480px) {
+    .fila-campos { grid-template-columns: 1fr; }
+    .checkout-titulo { font-size: 26px; }
+}

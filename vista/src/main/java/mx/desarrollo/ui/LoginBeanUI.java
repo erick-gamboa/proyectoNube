@@ -68,15 +68,24 @@ public class LoginBeanUI implements Serializable{
                  FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()
                          + appURL
          );
-
-
-
-            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + appURL);
         }else{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Usuario o contraseña incorrecta:", "Intente de nuevo"));
         }
     }
 
+    public boolean esAdmin() {
+        return usuario != null && usuario.getRol() != null && "admin".equalsIgnoreCase(usuario.getRol());
+    }
+
+    public void cerrarSesion() throws IOException {
+        usuario = new Usuario();
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        if (ctx != null) {
+            ctx.getExternalContext().redirect(
+                    ctx.getExternalContext().getRequestContextPath() + "/index.xhtml");
+        }
+    }
+    
     
     /* getters y setters*/
 

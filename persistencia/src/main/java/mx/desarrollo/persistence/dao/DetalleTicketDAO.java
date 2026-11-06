@@ -3,7 +3,6 @@ package mx.desarrollo.persistence.dao;
 import jakarta.persistence.EntityManager;
 import mx.desarrollo.entity.DetalleTicket;
 import mx.desarrollo.persistence.persistence.AbstractDAO;
-import java.util.List;
 
 public class DetalleTicketDAO extends AbstractDAO<DetalleTicket> {
 
